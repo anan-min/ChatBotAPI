@@ -1,14 +1,13 @@
-from app.utilities import Timer 
 from openai import OpenAI
-import json
+from dotenv import load_dotenv
+import os 
 
-
-
-API_KEYS = ""
+load_dotenv()
+API_KEYS = os.getenv('openai_api_key')
 class OpenAIProvider:
 
     def __init__(self) -> None:
-        self.client = OpenAI(api_key=API_KEYS)
+        print(f"openai api key: {API_KEYS}")
 
 
     def transcribe_audio_file(self, audio_file):
@@ -18,9 +17,7 @@ class OpenAIProvider:
 
         return transcribed_data.text
 
-        # timer end fw e
-        # log rtt for transcribe 
-        # where to store these file cloud in which format
+        
 
     def query_text_file(self, text):
         completion = self.client.chat.completions.create(
@@ -30,7 +27,7 @@ class OpenAIProvider:
                 {"role": "user", "content": "Hello!"}
             ]
         )
-        return completion
+        return completion.choices[0].message.content
     
 
     def speech_synthesis(self, text):
