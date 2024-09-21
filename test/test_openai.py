@@ -1,5 +1,5 @@
-from pathlib import Path
 from test_path import add_path
+from pathlib import Path
 add_path()
 from app.providers import OpenAIProvider
 
