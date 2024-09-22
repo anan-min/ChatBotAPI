@@ -7,12 +7,10 @@ API_KEYS = os.getenv('openai_api_key')
 class OpenAIProvider:
 
     def __init__(self) -> None:
-        print(f"openai api key: {API_KEYS}")
+        self.client = OpenAI(api_key=API_KEYS)
 
 
     def transcribe_audio_file(self, audio_file):
-        # timer start
-        
         transcribed_data = self.client.audio.transcriptions.create(model='whisper-1', file=audio_file, response_format='verbose_json')
 
         return transcribed_data.text
