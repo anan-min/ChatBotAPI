@@ -9,6 +9,7 @@ class TranscribeProcessor:
     
     async def process(self, request_data):
         audio_file = request_data.get_audio_file()
+        print(type(audio_file))
         audio_file_path = files_handler.save_audio_file(audio_file)
         try:
             response = await self.openai_transcribe(audio_file_path)
