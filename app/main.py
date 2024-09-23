@@ -3,6 +3,7 @@ from app.routes import setup_routes
 
 def create_app():
     app = Quart(__name__)
+    app.config['DEBUG'] = True
 
     # Setup routes
     setup_routes(app)

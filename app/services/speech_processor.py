@@ -4,7 +4,8 @@ class SpeechProcessor:
     def __init__(self) -> None:
         self.openai_provider = OpenAIProvider()
 
-    async def convert_to_speech(self, tts_provider, text):
+    async def process(self, request_data, text):
+        tts_provider = request_data.get_tts_provider()
         if False:
             pass 
         else:

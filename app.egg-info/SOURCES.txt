@@ -26,5 +26,6 @@ test/test_openai.py
 test/test_path.py
 test/test_performance.py
 test/test_query.py
+test/test_request_processor.py
 test/test_stt.py
 test/test_tts.py

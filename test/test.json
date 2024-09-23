@@ -1,0 +1,8 @@
+curl -X POST https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: multipart/form-data" \
+  -F "audio_file=@/path/to/your/audiofile.mp3" \
+  -F "metadata={ \
+        \"stt_provider\": \"openai\", \
+        \"tts_provider\": \"openai\", \
+        \"query_provider\": \"openai\" \
+     };type=application/json"

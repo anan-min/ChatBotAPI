@@ -3,7 +3,8 @@ class QueryProcessor:
     def __init__(self) -> None:
         self.openai_provider = OpenAIProvider()
 
-    async def query_response(self, text):
+    async def process(self, request_data ,text):
+        query_provider = request_data.get_query_provider()
         if False:
             pass
         else:

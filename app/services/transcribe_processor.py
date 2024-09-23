@@ -5,12 +5,12 @@ class TranscribeProcessor:
         self.openai_provider = OpenAIProvider() 
 
     
-    async def transcribe(self, request_data):
+    async def process(self, request_data):
         audio_file = request_data.get_audio_file()
         if False:
             pass 
         else:
-            return await self.openai_transcribe(self.audio_file)
+            return await self.openai_transcribe(audio_file)
 
 
     async def openai_transcribe(self, audio_file):

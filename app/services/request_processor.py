@@ -1,41 +1,32 @@
 from quart import abort
-from quart import jsonify, abort
-from app.utilities.request_data import RequestData
+import base64
 from mimetypes import guess_type
+from app.utilities.request_data import RequestData
+
+DEFAULT_PROVIDER = "open_ai"
 
 
 class RequestProcessor:
     def __init__(self) -> None:
         pass 
-    async def parse_data(self, request_data):
-        request = self.request_data
+
+    async def process(self, request):
+        # Get JSON data
+        data = request.get_json()
         
-        if request is None:
-            abort(400, jsonify({"message": "No request"}))
-        if request.method != "POST":
-            abort(400, jsonify({"message": "Not a POST request"}) )
-        if request.headers.get("Content-Type") != "application/json":
-            abort(400, jsonify({"message": "Not a JSON request"}))
+        # Extract base64-encoded audio file
+        encoded_audio = data['audio_file']
+        
+        # Decode the audio file
+        audio_data = base64.b64decode(encoded_audio)
+        
+        # You could save this data to a file or process it directly
+        with open('received_audio.mp3', 'wb') as audio_file:
+            audio_file.write(audio_data)
 
-        try:
-            request_data = await request.get_json()
-            if request_data is None:
-                abort(400, description="No JSON data provided.")
-        except Exception as e:
-            abort(400, description=f"Invalid JSON: {str(e)}")
+        # Handle other data
+        stt_provider = data.get('stt_provider', DEFAULT_PROVIDER)
+        tts_provider = data.get('tts_provider', DEFAULT_PROVIDER)
+        query_provider = data.get('query_provider', DEFAULT_PROVIDER)
 
-        audio_file = request_data.get("audio_file")
-
-        if audio_file is None:
-            abort(400, jsonify({"message": "No audio file"}))
-        file_type, _ = guess_type(audio_file.filename)
-        if not file_type.startswith('audio/'):
-            abort(400, 'Invalid file format. Only audio files are allowed.')
-
-        return RequestData(
-                audio_file=audio_file  
-                stt_provider=request_data.get("stt_provider", None),
-                tts_provider=request_data.get("tts_provider", None),
-                query_provider=request_data.get("query_provider", None),
-            )
-    
+        return RequestData(stt_provider, tts_provider, query_provider, audio_data)
