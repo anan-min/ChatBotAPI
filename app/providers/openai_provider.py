@@ -10,7 +10,7 @@ API_KEYS = os.getenv('openai_api_key')
 class OpenAIProvider:
     def __init__(self) -> None:
         self.client = OpenAI(api_key=API_KEYS)
-
+ 
     async def transcribe_audio_file(self, audio_file_path):
         start_time = time.time()
         loop = asyncio.get_running_loop()
@@ -42,7 +42,6 @@ class OpenAIProvider:
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": text},
-                    {"role": "user", "content": "Hello!"}
                 ]
             )
         )

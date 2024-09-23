@@ -4,7 +4,7 @@ import requests
 import time 
 
 url = 'http://127.0.0.1:5000/'
-AUDIO_FILE_PATH = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'voice3.wav'
+AUDIO_FILE_PATH = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'voice5.wav'
 SAVE_PATH = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'speech.wav'
 
 def send_audio_file(api_url, file_path):
