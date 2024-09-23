@@ -9,6 +9,7 @@ def setup_routes(app: Quart):
     query_processor = QueryProcessor()
     speech_processor = SpeechProcessor()
     request_processor = RequestProcessor()
+    response_processor = ResponseProcessor()
 
 
     @app.route("/", methods=["POST"])
@@ -17,5 +18,4 @@ def setup_routes(app: Quart):
         text = await transcribe_processor.process(request_data)
         query_response = await query_processor.process(request_data, text)
         audio_response = await speech_processor.process(request_data, query_response)
-        file_path =  files_handler.save_audio_file(audio_response)
-        return await send_file(file_path)
+        return await response_processor.process(audio_response)
