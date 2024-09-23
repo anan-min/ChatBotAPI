@@ -2,7 +2,6 @@ from quart import abort
 import base64
 from mimetypes import guess_type
 from app.utilities.request_data import RequestData
-
 DEFAULT_PROVIDER = "open_ai"
 
 
@@ -11,22 +10,19 @@ class RequestProcessor:
         pass 
 
     async def process(self, request):
-        # Get JSON data
-        data = request.get_json()
-        
-        # Extract base64-encoded audio file
-        encoded_audio = data['audio_file']
-        
-        # Decode the audio file
-        audio_data = base64.b64decode(encoded_audio)
-        
-        # You could save this data to a file or process it directly
-        with open('received_audio.mp3', 'wb') as audio_file:
-            audio_file.write(audio_data)
+        if 'audio_file' not in await request.files:
+            abort(400, description="No audio file part in the request.")
 
-        # Handle other data
-        stt_provider = data.get('stt_provider', DEFAULT_PROVIDER)
-        tts_provider = data.get('tts_provider', DEFAULT_PROVIDER)
-        query_provider = data.get('query_provider', DEFAULT_PROVIDER)
+        # Get the file from the request
+        audio_file = (await request.files)['audio_file']
+
+        # Read the file's content into memory
+        audio_data = audio_file.read()
+
+        # Handle other data from the form
+        form_data = await request.form
+        stt_provider = form_data.get('stt_provider', DEFAULT_PROVIDER)
+        tts_provider = form_data.get('tts_provider', DEFAULT_PROVIDER)
+        query_provider = form_data.get('query_provider', DEFAULT_PROVIDER)
 
         return RequestData(stt_provider, tts_provider, query_provider, audio_data)

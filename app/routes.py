@@ -1,12 +1,15 @@
-from quart import Quart, request, jsonify
-from app.services import (TranscribeProcessor, QueryProcessor, SpeechProcessor, RequestProcessor, ResPonseProcessor)
+from quart import Quart, request, send_file, after_this_request
+from app.services import (TranscribeProcessor, QueryProcessor, SpeechProcessor, RequestProcessor)
+from app.services.response_processor import ResponseProcessor
+from app.utilities import files_handler
 
 def setup_routes(app: Quart):
+    files_handler.delete_temp_files()
     transcribe_processor = TranscribeProcessor()
     query_processor = QueryProcessor()
     speech_processor = SpeechProcessor()
     request_processor = RequestProcessor()
-    response_processor = ResPonseProcessor()
+
 
     @app.route("/", methods=["POST"])
     async def index():
@@ -14,5 +17,5 @@ def setup_routes(app: Quart):
         text = await transcribe_processor.process(request_data)
         query_response = await query_processor.process(request_data, text)
         audio_response = await speech_processor.process(request_data, query_response)
-        response = response_processor.process(audio_response, request_data)
-        return response
+        file_path =  files_handler.save_audio_file(audio_response)
+        return await send_file(file_path)

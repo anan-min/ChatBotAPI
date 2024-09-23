@@ -1,40 +1,55 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 import os 
+import asyncio
 
 load_dotenv()
 API_KEYS = os.getenv('openai_api_key')
-class OpenAIProvider:
 
+class OpenAIProvider:
     def __init__(self) -> None:
         self.client = OpenAI(api_key=API_KEYS)
 
-
-    def transcribe_audio_file(self, audio_file):
-        transcribed_data = self.client.audio.transcriptions.create(model='whisper-1', file=audio_file, response_format='verbose_json')
-
-        return transcribed_data.text
-
-        
-
-    def query_text_file(self, text):
-        completion = self.client.chat.completions.create(
-        model="gpt-4",
-            messages=[
-                {"role": "system", "content": text},
-                {"role": "user", "content": "Hello!"}
-            ]
+    async def transcribe_audio_file(self, audio_file_path):
+        loop = asyncio.get_running_loop()
+        transcribed_data = await loop.run_in_executor(
+            None,  
+            self._transcribe_sync,  
+            audio_file_path 
+        )
+        return transcribed_data
+    
+    def _transcribe_sync(self, audio_file_path):
+        with open(audio_file_path, "rb") as audio_file:
+            return self.client.audio.transcriptions.create(
+                model='whisper-1',
+                file=audio_file,
+                response_format='verbose_json'
+            ).text
+    
+    async def query_text_file(self, text):
+        # Since OpenAI's client library is not inherently asynchronous, run in executor
+        loop = asyncio.get_running_loop()
+        completion = await loop.run_in_executor(
+            None,
+            lambda: self.client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": text},
+                    {"role": "user", "content": "Hello!"}
+                ]
+            )
         )
         return completion.choices[0].message.content
-    
 
-    def speech_synthesis(self, text):
-        response = self.client.audio.speech.create(model='tts-1', voice="alloy", input=text)
-
+    async def speech_synthesis(self, text):
+        # Same as above, handle potentially synchronous calls in an executor
+        loop = asyncio.get_running_loop()
+        response = await loop.run_in_executor(
+            None,
+            lambda: self.client.audio.speech.create(model='tts-1', voice="alloy", input=text)
+        )
         result = b''.join([chunk for chunk in response.iter_bytes()])
-
         return result
-        
-
 
 
