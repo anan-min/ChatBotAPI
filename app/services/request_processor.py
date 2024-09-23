@@ -1,42 +1,28 @@
 from quart import abort
-from quart import jsonify, abort
-from app.utilities.request_data import RequestData
+import base64
 from mimetypes import guess_type
+from app.utilities.request_data import RequestData
+DEFAULT_PROVIDER = "open_ai"
 
 
 class RequestProcessor:
-    def __init__(self, request_data) -> None:
-        self.request_data = request_data
+    def __init__(self) -> None:
+        pass 
 
-    async def parse_data(self):
-        request = self.request_data
-        
-        if request is None:
-            abort(400, jsonify({"message": "No request"}))
-        if request.method != "POST":
-            abort(400, jsonify({"message": "Not a POST request"}) )
-        if request.headers.get("Content-Type") != "application/json":
-            abort(400, jsonify({"message": "Not a JSON request"}))
+    async def process(self, request):
+        if 'audio_file' not in await request.files:
+            abort(400, description="No audio file part in the request.")
 
-        try:
-            request_data = await request.get_json()
-            if request_data is None:
-                abort(400, description="No JSON data provided.")
-        except Exception as e:
-            abort(400, description=f"Invalid JSON: {str(e)}")
+        # Get the file from the request
+        audio_file = (await request.files)['audio_file']
 
-        audio_file = request_data.get("audio_file")
+        # Read the file's content into memory
+        audio_data = audio_file.read()
 
-        if audio_file is None:
-            abort(400, jsonify({"message": "No audio file"}))
-        file_type, _ = guess_type(audio_file.filename)
-        if not file_type.startswith('audio/'):
-            abort(400, 'Invalid file format. Only audio files are allowed.')
+        # Handle other data from the form
+        form_data = await request.form
+        stt_provider = form_data.get('stt_provider', DEFAULT_PROVIDER)
+        tts_provider = form_data.get('tts_provider', DEFAULT_PROVIDER)
+        query_provider = form_data.get('query_provider', DEFAULT_PROVIDER)
 
-        return RequestData(
-                stt_provider=request_data.get("stt_provider", None),
-                tts_provider=request_data.get("tts_provider", None),
-                query_provider=request_data.get("query_provider", None),
-                audio_file=audio_file  
-            )
-    
+        return RequestData(stt_provider, tts_provider, query_provider, audio_data)

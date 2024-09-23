@@ -1,3 +1,4 @@
+
 class RequestData:
     def __init__(self, stt_provider, tts_provider, query_provider, audio_file):
         self.stt_provider = stt_provider

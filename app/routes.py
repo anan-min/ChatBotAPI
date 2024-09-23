@@ -1,20 +1,21 @@
-from quart import Quart, request, jsonify
-from app.services import TranscribeProcessor, SpeechProcessor, QueryProcessor, RequestProcessor
+from quart import Quart, request, send_file, after_this_request
+from app.services import (TranscribeProcessor, QueryProcessor, SpeechProcessor, RequestProcessor)
+from app.services.response_processor import ResponseProcessor
+from app.utilities import files_handler
 
-app = Quart(__name__)
-transcribe_processor = TranscribeProcessor()
-query_processor = QueryProcessor()
-speech_processor = SpeechProcessor()
-request_processor = RequestProcessor()
-
-@app.route("/", methods=["POST"])
-async def index():
-    request_data = request_processor.parse_data(request)
-    
-    text = transcribe_processor(request_data.get_text(), request_data.get_stt_provider())
-    query_response = query_processor(text, request_data.get_query_provider())
-    audio_reponse = speech_processor(query_response, request_data.get_tts_provider())
-
-    return jsonify(audio_reponse)
+def setup_routes(app: Quart):
+    files_handler.delete_temp_files()
+    transcribe_processor = TranscribeProcessor()
+    query_processor = QueryProcessor()
+    speech_processor = SpeechProcessor()
+    request_processor = RequestProcessor()
 
 
+    @app.route("/", methods=["POST"])
+    async def index():
+        request_data = await request_processor.process(request)
+        text = await transcribe_processor.process(request_data)
+        query_response = await query_processor.process(request_data, text)
+        audio_response = await speech_processor.process(request_data, query_response)
+        file_path =  files_handler.save_audio_file(audio_response)
+        return await send_file(file_path)
