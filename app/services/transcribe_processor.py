@@ -1,14 +1,12 @@
 from app.providers import OpenAIProvider
 
 class TranscribeProcessor:
-    def __init__(self, request_data) -> None:
+    def __init__(self) -> None:
         self.openai_provider = OpenAIProvider() 
-        self.request_data = request_data
-        self.audio_file = request_data.get_audio_file()
-        self.stt_provider = request_data.get_stt_provider()
 
     
-    async def transcribe(self):
+    async def transcribe(self, request_data):
+        audio_file = request_data.get_audio_file()
         if False:
             pass 
         else:

@@ -4,8 +4,6 @@ import csv
 from pathlib import Path
 from pythainlp import word_tokenize
 from collections import Counter
-from test_path import add_path
-add_path()
 from app.providers import OpenAIProvider
 
 

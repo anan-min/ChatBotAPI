@@ -5,10 +5,9 @@ from mimetypes import guess_type
 
 
 class RequestProcessor:
-    def __init__(self, request_data) -> None:
-        self.request_data = request_data
-
-    async def parse_data(self):
+    def __init__(self) -> None:
+        pass 
+    async def parse_data(self, request_data):
         request = self.request_data
         
         if request is None:
@@ -34,9 +33,9 @@ class RequestProcessor:
             abort(400, 'Invalid file format. Only audio files are allowed.')
 
         return RequestData(
+                audio_file=audio_file  
                 stt_provider=request_data.get("stt_provider", None),
                 tts_provider=request_data.get("tts_provider", None),
                 query_provider=request_data.get("query_provider", None),
-                audio_file=audio_file  
             )
     
