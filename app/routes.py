@@ -24,11 +24,13 @@ def setup_routes(app: Quart):
         text = await transcribe_processor.process(request_data)
         end_time = time.time()
         print(f"Transcription took {end_time - start_time} seconds to complete")
+        print(f"Transcribed text: {text}")
 
         start_time = time.time()
         query_response = await query_processor.process(request_data, text)
         end_time = time.time()
         print(f"Query processing took {end_time - start_time} seconds to complete")
+        print(f"Query response: {query_response}")
 
 
         audio_response = await speech_processor.process(request_data, query_response)
