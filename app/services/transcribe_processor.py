@@ -1,5 +1,5 @@
 from app.providers import OpenAIProvider
-from app.utilities import files_handler
+from app.utils import files_handler
 from pathlib import Path
 
 class TranscribeProcessor:

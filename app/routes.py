@@ -1,7 +1,7 @@
 from quart import Quart, request, send_file, after_this_request
 from app.services import (TranscribeProcessor, QueryProcessor, SpeechProcessor, RequestProcessor)
 from app.services.response_processor import ResponseProcessor
-from app.utilities import files_handler
+from app.utils import files_handler
 import time 
 
 def setup_routes(app: Quart):

@@ -1,7 +1,7 @@
 from quart import abort
 import base64
 from mimetypes import guess_type
-from app.utilities.request_data import RequestData
+from app.utils.request_data import RequestData
 DEFAULT_PROVIDER = "open_ai"
 
 
