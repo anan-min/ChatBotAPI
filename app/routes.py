@@ -1,11 +1,12 @@
 from quart import Quart, request, jsonify
-from app.services import TranscribeProcessor, SpeechProcessor, QueryProcessor, RequestProcessor
+from app.services import (TranscribeProcessor, QueryProcessor, SpeechProcessor, RequestProcessor, ResPonseProcessor)
 
 def setup_routes(app: Quart):
     transcribe_processor = TranscribeProcessor()
     query_processor = QueryProcessor()
     speech_processor = SpeechProcessor()
     request_processor = RequestProcessor()
+    response_processor = ResPonseProcessor()
 
     @app.route("/", methods=["POST"])
     async def index():
@@ -13,5 +14,5 @@ def setup_routes(app: Quart):
         text = await transcribe_processor.process(request_data)
         query_response = await query_processor.process(request_data, text)
         audio_response = await speech_processor.process(request_data, query_response)
-
-        return jsonify(audio_response)
+        response = response_processor.process(audio_response, request_data)
+        return response

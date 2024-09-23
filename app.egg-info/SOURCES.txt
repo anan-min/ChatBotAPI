@@ -16,6 +16,7 @@ app/providers/openai_provider.py
 app/services/__init__.py
 app/services/query_processor.py
 app/services/request_processor.py
+app/services/response_processor.py
 app/services/speech_processor.py
 app/services/transcribe_processor.py
 app/utilities/__init__.py
