@@ -1,0 +1,11 @@
+Filename,Provider,Model,Time Taken (s),File size,Word Count,Transcribed Text
+voice_16k_1.wav,google,speech-to-text,2.417436122894287,319818,6,เหรียญนวะ 8 หน่อย
+speech_1.mp3,google,text-to-speech,0.20281481742858887,14784,6,เหรียญนวะ 8 หน่อย
+voice_16k_2.wav,google,speech-to-text,1.927032470703125,272684,13,ช่วยค้นหาบริษัทที่มีความน่าเชื่อถือในไทยมาจำนวน 5 สาขา
+speech_2.mp3,google,text-to-speech,0.2956860065460205,44544,13,ช่วยค้นหาบริษัทที่มีความน่าเชื่อถือในไทยมาจำนวน 5 สาขา
+voice_16k_3.wav,google,speech-to-text,0.8722796440124512,63404,4,หมูเด้งคืออะไร
+speech_3.mp3,google,text-to-speech,0.1696336269378662,14400,4,หมูเด้งคืออะไร
+voice_16k_4.wav,google,speech-to-text,0.9596176147460938,84524,5,หวยงวดนี้ออกอะไร
+speech_4.mp3,google,text-to-speech,0.1681525707244873,18624,5,หวยงวดนี้ออกอะไร
+voice_16k_5.wav,google,speech-to-text,1.5627720355987549,220844,8,ช่วยอธิบายขั้นตอนการทำเด็กหลอดแก้วโดยย่อ
+speech_5.mp3,google,text-to-speech,0.24722623825073242,30336,8,ช่วยอธิบายขั้นตอนการทำเด็กหลอดแก้วโดยย่อ
