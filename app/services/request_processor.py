@@ -2,6 +2,7 @@ from quart import abort
 import base64
 from mimetypes import guess_type
 from app.utils.request_data import RequestData
+from app.utils.session_manager import SessionManager
 DEFAULT_PROVIDER = "open_ai"
 
 
@@ -10,6 +11,7 @@ class RequestProcessor:
         pass 
 
     async def process(self, request):
+
         if 'audio_file' not in await request.files:
             abort(400, description="No audio file part in the request.")
 
@@ -25,4 +27,4 @@ class RequestProcessor:
         tts_provider = form_data.get('tts_provider', DEFAULT_PROVIDER)
         query_provider = form_data.get('query_provider', DEFAULT_PROVIDER)
 
-        return RequestData(stt_provider, tts_provider, query_provider, audio_data)
+        return SessionManager(stt_provider, tts_provider, query_provider, audio_data)
