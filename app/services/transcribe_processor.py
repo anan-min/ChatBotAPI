@@ -1,4 +1,4 @@
-from app.providers import OpenAIProvider
+from app.providers import OpenAIProvider , AmazonProvider
 from app.utils import files_handler
 from pathlib import Path
 from app.utils.session_manager import SessionManager
@@ -6,6 +6,8 @@ from app.utils.session_manager import SessionManager
 class TranscribeProcessor:
     def __init__(self) -> None:
         self.openai_provider = OpenAIProvider() 
+        bucket_name='speech-to-text-storage'
+        self.amazon_provider= AmazonProvider(bucket_name)
 
     
     async def process(self, session: SessionManager):
