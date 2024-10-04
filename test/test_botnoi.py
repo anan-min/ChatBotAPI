@@ -14,6 +14,7 @@ from app.providers import BotnoiProvider
 reports_path = Path(__file__).parent.parent / 'app' / 'data' / 'report'
 dataset_path = Path(__file__).parent.parent / 'app' / 'data' / 'dataset' / 'dataset03_THver.csv'
 
+
 def load_texts_from_csv(file_path, max_text):
     df = pd.read_csv(file_path)
     texts = df['Customer Comment'].dropna().tolist()[:max_text]

@@ -9,6 +9,7 @@ class TranscribeProcessor:
         bucket_name='speech-to-text-storage'
         self.amazon_provider= AmazonProvider(bucket_name)
 
+
     
     async def process(self, session: SessionManager):
         audio_file = session.get_client_audio_file()

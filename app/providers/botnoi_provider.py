@@ -9,6 +9,7 @@ url = "https://api-voice.botnoi.ai/openapi/v1/generate_audio"
 
 
 
+
 class BotnoiProvider:
 
     def speech_synthesis(self, text):
