@@ -4,8 +4,8 @@ import requests
 import time 
 
 url = 'http://127.0.0.1:5000/'
-AUDIO_FILE_PATH = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'voice.wav'
-SAVE_PATH = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'speech.wav'
+AUDIO_FILE_PATH = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'Recording.wav'
+SAVE_PATH = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'speech1.wav'
 
 def send_audio_file(api_url, file_path):
     """
@@ -18,10 +18,16 @@ def send_audio_file(api_url, file_path):
 
     start_time = time.time()
 
+    data = {
+        'stt_provider': "aws",
+        'tts_provider': "botnoi",
+        'query_provider': "openai"
+    }
+
     # Open the file in binary mode
     with open(file_path, 'rb') as file:
         files = {'audio_file': (os.path.basename(file_path), file, 'audio/wav')}
-        response = requests.post(api_url, files=files)
+        response = requests.post(api_url, data=data, files=files)
 
 
     end_time = time.time()
@@ -35,5 +41,7 @@ def send_audio_file(api_url, file_path):
         print(f"File successfully downloaded and saved to {SAVE_PATH}")
     else:
         print(f"Failed to download the file: {response.status_code} - {response.text}")
+
+        
 # Call the function to test the API
 send_audio_file(url, AUDIO_FILE_PATH)
