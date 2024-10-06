@@ -47,3 +47,5 @@ class TranscribeProcessor:
             return await self.amazon_provider.transcribe_audio_file(audio_file_path)
         finally:
             files_handler.delete_file(audio_file_path)
+        
+    
