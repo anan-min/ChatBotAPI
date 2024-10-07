@@ -1,9 +1,12 @@
 from quart import Quart
 from app.routes import setup_routes
+from quart_cors import cors
+
 
 def create_app():
     app = Quart(__name__)
     app.config['DEBUG'] = True
+    cors(app, allow_origin="http://localhost:3000")
 
     # Setup routes
     setup_routes(app)

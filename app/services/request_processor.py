@@ -16,14 +16,18 @@ class RequestProcessor:
 
         # Get the file from the request
         audio_file = (await request.files)['audio_file']
+        
 
         # Read the file's content into memory
         audio_data = audio_file.read()
 
         # Handle other data from the form
         form_data = await request.form
+        print(form_data)
         stt_provider = form_data.get('stt_provider', DEFAULT_PROVIDER)
         tts_provider = form_data.get('tts_provider', DEFAULT_PROVIDER)
         query_provider = form_data.get('query_provider', DEFAULT_PROVIDER)
+
+        print(f"stt_provider: {stt_provider}, tts_provider: {tts_provider}, query_provider: {query_provider}")
 
         return SessionManager(stt_provider, tts_provider, query_provider, audio_data)
