@@ -20,7 +20,7 @@ def send_audio_file(api_url, file_path):
 
     data = {
         'stt_provider': "aws",
-        'tts_provider': "openai",
+        'tts_provider': "botnoi",
         'query_provider': "openai"
     }
 
