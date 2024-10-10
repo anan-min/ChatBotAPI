@@ -1,28 +1,30 @@
 from pathlib import Path
 from app.providers import OpenAIProvider
+from app.providers.google_provider import GoogleProvider
 import io
+import asyncio
 import base64
 
 
-def test_openai_provider():
-    provider = OpenAIProvider()
+async def test_openai_provider():
+    provider = GoogleProvider()
+    openai = OpenAIProvider()
 
-    audio_file_path = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'voice.wav'
-    audio_file = open(audio_file_path, "rb")
+    # audio_file_path = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'voice2.wav'
 
-    text = provider.transcribe_audio_file(audio_file)
-    print(f"transcribe text: {text}")
+    # text = provider.transcribe_audio_file(audio_file_path)
+    # print(f"transcribe text: {text}")
 
-    response = provider.query_text_file(text)
+    # response = await openai.query_text_file(text)
 
-    print(response)
-    print(f"openai response: {response}")
+    # print(response)
+    # print(f"openai response: {response}")
 
 
     speech_file_path = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'speech.wav'
-    speech = provider.speech_synthesis(response)
+    speech = provider.speech_synthesis("ลองพูดสิ่งนี้ดูสิว่าจะมีเสียงอย่างไร")
     with open(speech_file_path, 'wb') as speech_file:
-                speech_file.write(speech)
+        speech_file.write(speech)
                 
     print(f"speech generated at{speech_file_path}")
 
@@ -40,4 +42,6 @@ def test_audio_bytes():
     assert transcription is not None, "Transcription should not be None"
 
 # test_openai_provider()
-test_audio_bytes()
+
+
+asyncio.run(test_openai_provider())
