@@ -1,68 +1,77 @@
-import os 
-import time
-import csv
-from pathlib import Path
-from pythainlp import word_tokenize
-from collections import Counter
-from app.providers import GoogleProvider
-from app.utils.convert_audio_sample_rate import convert_audio_sample_rate
+import logging
+from google.cloud import texttospeech
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
-reports_path = Path(__file__).parent.parent / 'app' / 'data' / 'report' 
-sample_voices_path = Path(__file__).parent.parent / 'app' / 'data' / 'sample' 
+def test_configs(voice_configs, audio_configs):
+    # Test voice configurations
+    try:
+        language_code = voice_configs.get("language_code")
+        ssml_gender = voice_configs.get("ssml_gender")
 
-def count_thai_words(text):
-    tokens = word_tokenize(text, engine='newmm')
-    word_count = Counter(tokens)
-    return len(word_count)
+        # Validate language code
+        if not language_code:
+            raise ValueError("Language code is required.")
+        logging.info(f"Language code: {language_code}")
 
+        # Validate ssml gender
+        if ssml_gender not in [
+            texttospeech.SsmlVoiceGender.NEUTRAL,
+            texttospeech.SsmlVoiceGender.MALE,
+            texttospeech.SsmlVoiceGender.FEMALE,
+        ]:
+            raise ValueError("Invalid SSML gender.")
+        logging.info(f"SSML gender: {ssml_gender}")
 
-def provider_performance_testing(provider, provider_name, model, max_files=100):
-    csv_path = generate_stt_csv_file_path(provider_name)
-    generate_csv(csv_path)
+    except Exception as e:
+        logging.error(f"Voice configuration error: {e}")
 
-    count = 0 
-    for filename in os.listdir(sample_voices_path):
-        if count >= max_files:
-            break
-        
-        file_path = sample_voices_path / filename
+    # Test audio configurations
+    try:
+        audio_encoding = audio_configs.get("audio_encoding")
+        speaking_rate = audio_configs.get("speaking_rate")
+        pitch = audio_configs.get("pitch")
+        effects_profile_id = audio_configs.get("effects_profile_id")
 
-        converted_file_path = file_path.with_name(file_path.stem + '_16k.wav')
-        convert_audio_sample_rate(file_path, converted_file_path)
+        # Validate audio encoding
+        if audio_encoding not in [
+            texttospeech.AudioEncoding.MP3,
+            texttospeech.AudioEncoding.LINEAR16,
+        ]:
+            raise ValueError("Invalid audio encoding.")
+        logging.info(f"Audio encoding: {audio_encoding}")
 
-        with open(converted_file_path, "rb") as audio_file:
-            start_time = time.time()
-            transcribed_data = provider.transcribe_audio_file(converted_file_path)
-            end_time = time.time()
-            time_taken = end_time - start_time
-            file_size = os.path.getsize(file_path)
-            word_count = count_thai_words(transcribed_data)
-            print(f"File {count} {filename} took {time_taken} seconds to transcribe and {word_count} words were transcribed.")
+        # Validate speaking rate
+        if not (0.25 <= speaking_rate <= 4.0):
+            raise ValueError("Speaking rate must be between 0.25 and 4.0.")
+        logging.info(f"Speaking rate: {speaking_rate}")
 
-        write_csv(csv_path, filename, provider_name, model, time_taken, file_size, word_count, transcribed_data)
-        
-        if os.path.exists(converted_file_path):
-            os.remove(converted_file_path)
-        
-        count += 1
+        # Validate pitch
+        if not (-20.0 <= pitch <= 20.0):
+            raise ValueError("Pitch must be between -20.0 and 20.0.")
+        logging.info(f"Pitch: {pitch}")
 
-def generate_stt_csv_file_path(provider_name):
-    csv_name = f"{provider_name}_stt.csv"
-    csv_path = Path(__file__).parent.parent / 'app' / 'data' / 'report' / csv_name
-    return csv_path 
+        # Validate effects profile ID
+        if effects_profile_id != "standard":  # Assuming "standard" is a valid profile
+            raise ValueError("Invalid effects profile ID.")
+        logging.info(f"Effects profile ID: {effects_profile_id}")
 
-def generate_csv(csv_path):
-    with open(csv_path, mode='w', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Filename', 'Provider', 'Model', 'Time Taken (s)', 'File size', 'Word Count' ,'Transcribed Text'])
+    except Exception as e:
+        logging.error(f"Audio configuration error: {e}")
 
-def write_csv(csv_path, filename, provider, model, time_taken, file_size, word_count, transcribed_text):
-    with open(csv_path, mode='a', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
-        writer.writerow([filename, provider, model, time_taken, file_size, word_count, transcribed_text])
+# Example usage
+if __name__ == "__main__":
+    voice_configs = {
+        "language_code": "th-TH",
+        "ssml_gender": getattr(texttospeech.SsmlVoiceGender, "NEUTRAL")
+    }
 
-if __name__ == '__main__':
-    api_credentials = 'app/api/google/demo.json'
-    provider = GoogleProvider(api_credentials)
-    provider_performance_testing(provider, 'google', 'google', 100)
+    audio_configs = {
+        "audio_encoding": texttospeech.AudioEncoding.MP3,
+        "speaking_rate": 1.0,
+        "pitch": 1.0,
+        "effects_profile_id": "standard"
+    }
+
+    test_configs(voice_configs, audio_configs)
