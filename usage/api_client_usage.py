@@ -19,9 +19,9 @@ def send_audio_file(api_url, file_path):
     start_time = time.time()
 
     data = {
-        'stt_provider': "test123",
-        'tts_provider': "test456",
-        'query_provider': "test678"
+        'stt_provider': "openai",
+        'tts_provider': "openai",
+        'query_provider': "openai"
     }
 
     # Open the file in binary mode

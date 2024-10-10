@@ -1,4 +1,5 @@
 from app.providers import OpenAIProvider , AmazonProvider
+from app.providers.google_provider import GoogleProvider
 from app.utils import files_handler
 from pathlib import Path
 from app.utils.session_manager import SessionManager
@@ -8,6 +9,7 @@ class TranscribeProcessor:
         self.openai_provider = OpenAIProvider() 
         bucket_name='speech-to-text-storage'
         self.amazon_provider= AmazonProvider(bucket_name)
+        self.google_provider = GoogleProvider()
 
 
     
@@ -36,7 +38,11 @@ class TranscribeProcessor:
             files_handler.delete_file(audio_file_path)
     
     async def google_transcribe(self, audio_file):
-        pass
+        audio_file_path = files_handler.save_audio_file(audio_file)
+        try:
+            return await self.google_provider.transcribe_audio_file(audio_file_path)
+        finally:
+            files_handler.delete_file(audio_file_path)
 
     async def azure_transcribe(self, audio_file):
         pass
