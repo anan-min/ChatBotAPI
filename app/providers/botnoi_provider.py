@@ -1,4 +1,4 @@
-import requests
+import aiohttp
 import asyncio
 import os
 from dotenv import load_dotenv
@@ -15,23 +15,17 @@ class BotnoiProvider:
         self.url = url
 
     async def speech_synthesis(self, text):
-        # ใช้ asyncio.run_in_executor เพื่อทำให้ synchronous API เรียกใช้ในรูปแบบ async
-        loop = asyncio.get_running_loop()
-
         start_time = time.time()
-        response = await loop.run_in_executor(
-            None,
-            lambda: self._sync_speech_synthesis(text)  # เรียกฟังก์ชัน synchronous
-        )
+        async with aiohttp.ClientSession() as session:
+            response = await self._async_speech_synthesis(session, text)
         end_time = time.time()
         print(f"Speech synthesis from Botnoi took {end_time - start_time} seconds to complete")
         return response
 
-    def _sync_speech_synthesis(self, text):
-        # ฟังก์ชัน synchronous ที่เรียกใช้ API ด้วย requests
+    async def _async_speech_synthesis(self, session, text):
         payload = {
             "text": text,
-            "speaker": "1",  # เลือก speaker reccommend 1 หรือ 4
+            "speaker": "1",  # Choose speaker
             "volume": 1,
             "speed": 1,
             "type_media": "wav",
@@ -43,20 +37,30 @@ class BotnoiProvider:
             'Content-Type': 'application/json'
         }
 
-        # ใช้ requests.post แบบ synchronous
-        response = requests.post(self.url, json=payload, headers=headers)
-        
-        if response.status_code == 200:
-            result = response.json()
-            audio_url = result.get('audio_url')
-            
-            # ดึงไฟล์เสียงจาก URL
-            if audio_url:
-                audio_response = requests.get(audio_url)
-                if audio_response.status_code == 200:
-                    return audio_response.content  # คืนค่าไฟล์เสียงเป็น bytes
-            return None
-        else:
-            print(f"Error {response.status_code}: {response.text}")
-            return None
+        # Use aiohttp.post for asynchronous requests
+        async with session.post(self.url, json=payload, headers=headers) as response:
+            if response.status == 200:
+                result = await response.json()
+                audio_url = result.get('audio_url')
 
+                # Fetch audio file from URL
+                if audio_url:
+                    audio_response = await session.get(audio_url)
+                    if audio_response.status == 200:
+                        return await audio_response.read()  # Return audio file as bytes
+            else:
+                print(f"Error {response.status}: {await response.text()}")
+                return None
+
+
+# Example usage of BotnoiProvider
+async def main():
+    botnoi = BotnoiProvider()
+    audio_data = await botnoi.speech_synthesis("Hello, this is synthesized speech from Botnoi.")
+    if audio_data:
+        with open("output.wav", "wb") as f:
+            f.write(audio_data)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
