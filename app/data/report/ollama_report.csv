@@ -1,0 +1,201 @@
+Input Text,Provider,Model,Time Taken (s),Input Word Count,Output Word Count,Language
+การทำสมาธิมีประโยชน์อย่างไร?,Ollama,llama3.2 3b latest 2GB,6.4397132396698,4,82,Thai
+ตลาดหุ้นทำงานอย่างไร?,Ollama,llama3.2 3b latest 2GB,2.2617154121398926,4,39,Thai
+การเปลี่ยนแปลงสภาพภูมิอากาศส่งผลกระทบต่อสิ่งมีชีวิตอย่างไร?,Ollama,llama3.2 3b latest 2GB,11.635416984558105,8,82,Thai
+อธิบายทฤษฎีสัมพัทธ์ในแบบที่เข้าใจง่าย.,Ollama,llama3.2 3b latest 2GB,10.13397216796875,8,122,Thai
+กลยุทธ์การบริหารเวลาที่มีประสิทธิภาพมีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,8.690882682800293,9,87,Thai
+การสังเคราะห์แสงทำงานอย่างไรในพืช?,Ollama,llama3.2 3b latest 2GB,7.672724008560181,7,90,Thai
+สาเหตุและผลกระทบของภาวะโลกร้อนคืออะไร?,Ollama,llama3.2 3b latest 2GB,4.251030921936035,10,60,Thai
+คุณสามารถอธิบายกระบวนการหายใจในเซลล์ได้ไหม?,Ollama,llama3.2 3b latest 2GB,10.657236814498901,10,83,Thai
+ความแตกต่างระหว่างระบบเศรษฐกิจทุนนิยมและสังคมนิยมคืออะไร?,Ollama,llama3.2 3b latest 2GB,5.3198747634887695,8,67,Thai
+วัคซีนทำงานอย่างไรเพื่อป้องกันโรค?,Ollama,llama3.2 3b latest 2GB,12.004768133163452,7,102,Thai
+หลักการสำคัญของการคิดเชิงออกแบบคืออะไร?,Ollama,llama3.2 3b latest 2GB,3.256263017654419,10,46,Thai
+อธิบายความสำคัญของรัฐธรรมนูญ.,Ollama,llama3.2 3b latest 2GB,8.577373504638672,5,71,Thai
+มีขั้นตอนอะไรบ้างในพัฒนาการของมนุษย์?,Ollama,llama3.2 3b latest 2GB,25.853986501693726,9,149,Thai
+เทคโนโลยีบล็อกเชนทำงานอย่างไร?,Ollama,llama3.2 3b latest 2GB,10.22660493850708,5,78,Thai
+ข้อดีและข้อเสียของพลังงานทดแทนมีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,13.026489496231079,10,93,Thai
+DNA มีบทบาทอย่างไรในพันธุกรรม?,Ollama,llama3.2 3b latest 2GB,7.8268914222717285,7,72,Thai
+แพลตฟอร์มโซเชียลมีเดียมีผลต่อการสื่อสารอย่างไร?,Ollama,llama3.2 3b latest 2GB,9.037404537200928,7,67,Thai
+มีเคล็ดลับอะไรบ้างสำหรับการพูดในที่สาธารณะอย่างมีประสิทธิภาพ?,Ollama,llama3.2 3b latest 2GB,9.738266706466675,12,110,Thai
+อธิบายแนวคิดของปัญญาประดิษฐ์.,Ollama,llama3.2 3b latest 2GB,10.236878871917725,5,96,Thai
+รากฐานทางประวัติศาสตร์ของอินเทอร์เน็ตคืออะไร?,Ollama,llama3.2 3b latest 2GB,14.067529678344727,8,126,Thai
+วัฒนธรรมต่างๆ มองสุขภาพจิตอย่างไร?,Ollama,llama3.2 3b latest 2GB,12.605448961257935,7,82,Thai
+ธีมหลักในบทละครของเช็คสเปียร์มีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,8.185964822769165,11,61,Thai
+สมองของมนุษย์ประมวลผลข้อมูลอย่างไร?,Ollama,llama3.2 3b latest 2GB,10.695946216583252,6,92,Thai
+ความสำคัญของความหลากหลายทางชีวภาพในระบบนิเวศคืออะไร?,Ollama,llama3.2 3b latest 2GB,10.281750202178955,10,69,Thai
+คุณวัดการเติบโตทางเศรษฐกิจได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,12.268380641937256,8,127,Thai
+ผลกระทบของการตัดไม้ทำลายป่าต่อสิ่งแวดล้อมมีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,12.861766815185547,10,88,Thai
+คุณสามารถอธิบายกระบวนการคัดเลือกตามธรรมชาติได้ไหม?,Ollama,llama3.2 3b latest 2GB,11.972490787506104,10,103,Thai
+มีอคติทางความคิดที่พบบ่อยอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,4.4984259605407715,9,52,Thai
+ความแตกต่างทางวัฒนธรรมมีผลต่อรูปแบบการเจรจาอย่างไร?,Ollama,llama3.2 3b latest 2GB,9.471555948257446,8,101,Thai
+ผลกระทบที่เป็นไปได้ของการใช้เทคโนโลยีอัตโนมัติต่ออาชีพคืออะไร?,Ollama,llama3.2 3b latest 2GB,10.685050249099731,13,95,Thai
+อธิบายความสำคัญของวิธีวิทยาศาสตร์.,Ollama,llama3.2 3b latest 2GB,4.775720596313477,6,51,Thai
+สาเหตุหลักของความยากจนทั่วโลกมีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,11.650356769561768,9,84,Thai
+โฆษณามีอิทธิพลต่อพฤติกรรมของผู้บริโภคอย่างไร?,Ollama,llama3.2 3b latest 2GB,11.133398532867432,8,70,Thai
+ประวัติศาสตร์ของการเคลื่อนไหวสิทธิพลเมืองในสหรัฐอเมริกาคืออะไร?,Ollama,llama3.2 3b latest 2GB,15.838430166244507,10,88,Thai
+อารมณ์ของเรามีผลต่อการตัดสินใจอย่างไร?,Ollama,llama3.2 3b latest 2GB,6.498172283172607,7,81,Thai
+หลักการของการพัฒนาที่ยั่งยืนคืออะไร?,Ollama,llama3.2 3b latest 2GB,2.540396213531494,8,39,Thai
+รัฐบาลมีบทบาทอย่างไรในการควบคุมเศรษฐกิจ?,Ollama,llama3.2 3b latest 2GB,9.5287184715271,7,92,Thai
+ความเครียดมีผลกระทบต่อสุขภาพร่างกายอย่างไร?,Ollama,llama3.2 3b latest 2GB,13.430987119674683,7,104,Thai
+อธิบายแนวคิดของอุปสงค์และอุปทาน.,Ollama,llama3.2 3b latest 2GB,8.946293354034424,8,73,Thai
+ความท้าทายของการเมืองเมืองคืออะไร?,Ollama,llama3.2 3b latest 2GB,6.7909016609191895,8,69,Thai
+ศาสนาต่างๆ มีแนวทางอย่างไรต่อแนวคิดด้านศีลธรรม?,Ollama,llama3.2 3b latest 2GB,9.932969808578491,11,90,Thai
+ทฤษฎีหลักของแรงจูงใจในจิตวิทยามีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,8.15595817565918,10,86,Thai
+คุณนิยามความสำเร็จในชีวิตอย่างไร?,Ollama,llama3.2 3b latest 2GB,6.806848526000977,7,86,Thai
+ความสัมพันธ์ระหว่างการศึกษาและรายได้คืออะไร?,Ollama,llama3.2 3b latest 2GB,5.39542818069458,8,59,Thai
+โลกาภิวัตน์มีผลต่อวัฒนธรรมท้องถิ่นอย่างไร?,Ollama,llama3.2 3b latest 2GB,10.717701196670532,6,86,Thai
+หน้าที่หลักของระบบภูมิคุ้มกันคืออะไร?,Ollama,llama3.2 3b latest 2GB,1.2521588802337646,8,21,Thai
+อธิบายกระบวนการสังเคราะห์แสง.,Ollama,llama3.2 3b latest 2GB,11.3111891746521,4,84,Thai
+องค์ประกอบหลักของการเป็นผู้นำที่มีประสิทธิภาพคืออะไร?,Ollama,llama3.2 3b latest 2GB,6.43004035949707,11,74,Thai
+คุณกระตุ้นความคิดสร้างสรรค์ในที่ทำงานอย่างไร?,Ollama,llama3.2 3b latest 2GB,10.086914777755737,7,86,Thai
+โซเชียลมีเดียมีผลกระทบต่อสังคมอย่างไร?,Ollama,llama3.2 3b latest 2GB,15.031692028045654,7,123,Thai
+คุณสร้างงบประมาณและปฏิบัติตามได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,2.931413173675537,8,50,Thai
+ความก้าวหน้าทางเทคโนโลยีทางการแพทย์มีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,14.33805799484253,7,138,Thai
+ทำไมคนถึงเป็นผู้ประกอบการที่ประสบความสำเร็จ?,Ollama,llama3.2 3b latest 2GB,14.767047882080078,8,112,Thai
+การออกกำลังกายมีผลต่อสุขภาพจิตอย่างไร?,Ollama,llama3.2 3b latest 2GB,6.999953269958496,5,68,Thai
+ความแตกต่างระหว่างการวิจัยเชิงคุณภาพและเชิงปริมาณคืออะไร?,Ollama,llama3.2 3b latest 2GB,12.18595576286316,10,90,Thai
+คุณจัดการความขัดแย้งในทีมได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,8.71351933479309,8,83,Thai
+การอ่านหนังสือมีประโยชน์อย่างไร?,Ollama,llama3.2 3b latest 2GB,6.921550512313843,5,78,Thai
+อธิบายบทบาทของเอนไซม์ในปฏิกิริยาชีวภาพ.,Ollama,llama3.2 3b latest 2GB,9.336915493011475,8,73,Thai
+ข้อกฎหมายด้านจริยธรรมของการตัดต่อพันธุกรรมมีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,17.117493867874146,10,85,Thai
+คุณพัฒนากรอบความคิดที่ดีได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,2.6257238388061523,8,43,Thai
+มีขั้นตอนอะไรบ้างในการพัฒนากลุ่ม?,Ollama,llama3.2 3b latest 2GB,11.65116286277771,8,124,Thai
+ดนตรีมีอิทธิพลต่ออารมณ์ของมนุษย์อย่างไร?,Ollama,llama3.2 3b latest 2GB,7.938718557357788,8,80,Thai
+ความสำคัญของมรดกทางวัฒนธรรมคืออะไร?,Ollama,llama3.2 3b latest 2GB,5.962648153305054,6,66,Thai
+คุณสร้างความสัมพันธ์ที่แข็งแกร่งได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,1.589318037033081,7,21,Thai
+ส่วนประกอบหลักของอาหารที่มีสุขภาพดีคืออะไร?,Ollama,llama3.2 3b latest 2GB,9.69906759262085,11,73,Thai
+อธิบายผลกระทบของเทคโนโลยีต่อการศึกษา.,Ollama,llama3.2 3b latest 2GB,10.329709529876709,7,103,Thai
+ลักษณะของทีมที่มีประสิทธิภาพมีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,9.552058458328247,9,79,Thai
+คุณนิยามและวัดความสุขได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,16.715510606765747,8,144,Thai
+ความท้าทายที่สำคัญในเศรษฐกิจโลกคืออะไร?,Ollama,llama3.2 3b latest 2GB,7.103457927703857,10,74,Thai
+สมองควบคุมการเคลื่อนไหวได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,9.469762086868286,6,82,Thai
+หลักการสำคัญของการตลาดที่มีประสิทธิภาพคืออะไร?,Ollama,llama3.2 3b latest 2GB,1.7310795783996582,9,24,Thai
+คุณสร้างสมดุลระหว่างงานและชีวิตได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,12.011807203292847,10,125,Thai
+เหตุการณ์สำคัญในประวัติศาสตร์การต่อสู้เพื่อสิทธิสตรีมีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,16.48010492324829,11,98,Thai
+คุณระบุและเอาชนะความเชื่อที่จำกัดได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,2.3714966773986816,10,38,Thai
+ผลกระทบต่อสิ่งแวดล้อมจากแฟชั่นที่รวดเร็วคืออะไร?,Ollama,llama3.2 3b latest 2GB,11.56584644317627,10,93,Thai
+คุณตั้งเป้าหมายและบรรลุเป้าหมายได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,2.8782105445861816,7,38,Thai
+ลักษณะสำคัญของการปกครองระบอบประชาธิปไตยมีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,11.297045230865479,9,93,Thai
+ปัจจัยทางจิตวิทยามีอิทธิพลต่อการใช้จ่ายของผู้บริโภคอย่างไร?,Ollama,llama3.2 3b latest 2GB,13.524532794952393,10,133,Thai
+ผลกระทบของการเปลี่ยนแปลงสภาพภูมิอากาศต่อคนรุ่นถัดไปคืออะไร?,Ollama,llama3.2 3b latest 2GB,4.798229455947876,11,57,Thai
+คุณสร้างวัฒนธรรมการทำงานที่ดีได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,17.56418514251709,9,159,Thai
+ประโยชน์ของการทำงานอาสาสมัครคืออะไร?,Ollama,llama3.2 3b latest 2GB,10.332315444946289,7,104,Thai
+อธิบายความสำคัญของความฉลาดทางอารมณ์.,Ollama,llama3.2 3b latest 2GB,9.550570726394653,8,86,Thai
+ส่วนประกอบหลักของกลยุทธ์การตลาดที่ประสบความสำเร็จคืออะไร?,Ollama,llama3.2 3b latest 2GB,6.481104373931885,10,77,Thai
+คุณพัฒนาความยืดหยุ่นในเผชิญกับความยากลำบากได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,6.938774347305298,10,66,Thai
+ผลกระทบทางจิตวิทยาของการบาดเจ็บคืออะไร?,Ollama,llama3.2 3b latest 2GB,11.894993782043457,8,93,Thai
+ความสำคัญของศิลปะในสังคมคืออะไร?,Ollama,llama3.2 3b latest 2GB,10.9232919216156,8,98,Thai
+คุณส่งเสริมความหลากหลายได้อย่างไรในที่ทำงาน?,Ollama,llama3.2 3b latest 2GB,11.159605026245117,8,126,Thai
+ส่วนประกอบหลักของอาหารที่สมดุลคืออะไร?,Ollama,llama3.2 3b latest 2GB,3.170916795730591,9,51,Thai
+อธิบายบทบาทของรัฐบาลในสุขภาพประชาชน.,Ollama,llama3.2 3b latest 2GB,10.442383050918579,8,94,Thai
+ผลกระทบของสื่อที่มีต่อการรับรู้ของประชาชนคืออะไร?,Ollama,llama3.2 3b latest 2GB,5.720983982086182,11,59,Thai
+คุณสร้างสภาพแวดล้อมการเรียนรู้ที่มีประสิทธิภาพได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,4.14504075050354,9,53,Thai
+ประโยชน์ของการคิดอย่างมีวิจารณญาณคืออะไร?,Ollama,llama3.2 3b latest 2GB,8.127245664596558,10,73,Thai
+คุณจัดการเวลาอย่างมีประสิทธิภาพได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,11.332376956939697,8,104,Thai
+ปัจจัยสำคัญที่ส่งผลต่อความยากจนคืออะไร?,Ollama,llama3.2 3b latest 2GB,5.627012252807617,8,54,Thai
+บรรทัดฐานทางวัฒนธรรมมีผลต่อพฤติกรรมอย่างไร?,Ollama,llama3.2 3b latest 2GB,9.767950773239136,6,82,Thai
+ผลกระทบของการออกแบบเมืองต่อความเป็นอยู่ของชุมชนคืออะไร?,Ollama,llama3.2 3b latest 2GB,11.367603540420532,11,104,Thai
+คุณพัฒนานิสัยการเรียนที่มีประสิทธิภาพได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,5.533197402954102,9,81,Thai
+ความท้าทายในด้านธุรกิจมีอะไรบ้าง?,Ollama,llama3.2 3b latest 2GB,8.70679783821106,9,84,Thai
+คุณพัฒนาความเห็นอกเห็นใจในความสัมพันธ์ได้อย่างไร?,Ollama,llama3.2 3b latest 2GB,11.58792233467102,8,101,Thai
+ประโยชน์ของการเรียนรู้ตลอดชีวิตคืออะไร?,Ollama,llama3.2 3b latest 2GB,3.7557942867279053,7,47,Thai
+What are the benefits of meditation?,Ollama,llama3.2 3b latest 2GB,8.237629175186157,6,300,English
+How does the stock market work?,Ollama,llama3.2 3b latest 2GB,13.598821640014648,6,474,English
+What is the impact of climate change on wildlife?,Ollama,llama3.2 3b latest 2GB,9.562761306762695,9,357,English
+Explain the theory of relativity in simple terms.,Ollama,llama3.2 3b latest 2GB,9.181380271911621,8,347,English
+What are some effective time management strategies?,Ollama,llama3.2 3b latest 2GB,9.85514211654663,7,342,English
+How does photosynthesis work in plants?,Ollama,llama3.2 3b latest 2GB,10.744101762771606,6,358,English
+What are the causes and effects of global warming?,Ollama,llama3.2 3b latest 2GB,15.135786056518555,9,511,English
+Can you describe the process of cellular respiration?,Ollama,llama3.2 3b latest 2GB,11.490954637527466,8,326,English
+What are the main differences between capitalism and socialism?,Ollama,llama3.2 3b latest 2GB,11.903894662857056,9,391,English
+How do vaccines work to protect against diseases?,Ollama,llama3.2 3b latest 2GB,11.262566089630127,8,375,English
+What are the key principles of design thinking?,Ollama,llama3.2 3b latest 2GB,8.44480562210083,8,290,English
+Explain the significance of the Magna Carta.,Ollama,llama3.2 3b latest 2GB,11.721468448638916,7,416,English
+What are the stages of human development?,Ollama,llama3.2 3b latest 2GB,7.5533998012542725,7,383,English
+How does blockchain technology function?,Ollama,llama3.2 3b latest 2GB,7.633829116821289,5,377,English
+What are the advantages and disadvantages of renewable energy?,Ollama,llama3.2 3b latest 2GB,6.052447319030762,9,337,English
+What is the role of DNA in heredity?,Ollama,llama3.2 3b latest 2GB,9.078213691711426,8,333,English
+How do social media platforms affect communication?,Ollama,llama3.2 3b latest 2GB,10.464269399642944,7,358,English
+What are some tips for effective public speaking?,Ollama,llama3.2 3b latest 2GB,9.335965156555176,8,376,English
+Explain the concept of artificial intelligence.,Ollama,llama3.2 3b latest 2GB,5.149096250534058,6,290,English
+What are the historical roots of the Internet?,Ollama,llama3.2 3b latest 2GB,13.410048961639404,8,437,English
+How do different cultures view mental health?,Ollama,llama3.2 3b latest 2GB,8.623155355453491,7,417,English
+What are the major themes in Shakespeare's plays?,Ollama,llama3.2 3b latest 2GB,7.491741418838501,8,388,English
+How does the human brain process information?,Ollama,llama3.2 3b latest 2GB,6.401855945587158,7,353,English
+What is the importance of biodiversity in ecosystems?,Ollama,llama3.2 3b latest 2GB,5.508938312530518,8,307,English
+How do you measure economic growth?,Ollama,llama3.2 3b latest 2GB,4.21039080619812,6,236,English
+What are the effects of deforestation on the environment?,Ollama,llama3.2 3b latest 2GB,4.919585943222046,9,288,English
+Can you explain the process of natural selection?,Ollama,llama3.2 3b latest 2GB,9.566654443740845,8,402,English
+What are some common cognitive biases?,Ollama,llama3.2 3b latest 2GB,9.01904034614563,6,330,English
+How do cultural differences influence negotiation styles?,Ollama,llama3.2 3b latest 2GB,9.98289442062378,7,357,English
+What are the potential impacts of automation on jobs?,Ollama,llama3.2 3b latest 2GB,10.445786237716675,9,391,English
+Explain the significance of the scientific method.,Ollama,llama3.2 3b latest 2GB,9.300005912780762,7,345,English
+What are the main causes of poverty around the world?,Ollama,llama3.2 3b latest 2GB,9.343642950057983,10,323,English
+How does advertising influence consumer behavior?,Ollama,llama3.2 3b latest 2GB,10.914780616760254,6,415,English
+What is the history of the civil rights movement in the US?,Ollama,llama3.2 3b latest 2GB,15.841071844100952,12,532,English
+How do our emotions affect our decision-making?,Ollama,llama3.2 3b latest 2GB,12.123843431472778,7,430,English
+What are the principles of sustainable development?,Ollama,llama3.2 3b latest 2GB,7.4367454051971436,7,262,English
+What is the role of government in regulating the economy?,Ollama,llama3.2 3b latest 2GB,9.428693056106567,10,341,English
+How does stress affect physical health?,Ollama,llama3.2 3b latest 2GB,9.271003246307373,6,313,English
+Explain the concept of supply and demand.,Ollama,llama3.2 3b latest 2GB,10.992417335510254,7,433,English
+What are the challenges of urbanization?,Ollama,llama3.2 3b latest 2GB,10.372203350067139,6,348,English
+How do different religions approach the concept of morality?,Ollama,llama3.2 3b latest 2GB,13.64989948272705,9,462,English
+What are the main theories of motivation in psychology?,Ollama,llama3.2 3b latest 2GB,10.740990400314331,9,368,English
+How do you define success in life?,Ollama,llama3.2 3b latest 2GB,9.662296056747437,7,362,English
+What is the relationship between education and income?,Ollama,llama3.2 3b latest 2GB,9.421980381011963,8,362,English
+How does globalization affect local cultures?,Ollama,llama3.2 3b latest 2GB,10.557655096054077,6,376,English
+What are the main functions of the immune system?,Ollama,llama3.2 3b latest 2GB,5.845322370529175,9,197,English
+Explain the process of photosynthesis.,Ollama,llama3.2 3b latest 2GB,10.335808515548706,5,322,English
+What are the key elements of effective leadership?,Ollama,llama3.2 3b latest 2GB,9.665060997009277,8,340,English
+How do you foster creativity in the workplace?,Ollama,llama3.2 3b latest 2GB,9.244402170181274,8,327,English
+What is the impact of social media on society?,Ollama,llama3.2 3b latest 2GB,11.86818814277649,9,430,English
+How do you create a budget and stick to it?,Ollama,llama3.2 3b latest 2GB,13.075727701187134,10,440,English
+What are the major advancements in medical technology?,Ollama,llama3.2 3b latest 2GB,13.203250646591187,8,431,English
+How does one become a successful entrepreneur?,Ollama,llama3.2 3b latest 2GB,11.795052289962769,7,418,English
+What are the effects of exercise on mental health?,Ollama,llama3.2 3b latest 2GB,9.692867755889893,9,344,English
+What are the key differences between qualitative and quantitative research?,Ollama,llama3.2 3b latest 2GB,10.245786905288696,10,327,English
+How do you effectively manage conflict in a team?,Ollama,llama3.2 3b latest 2GB,10.60068154335022,9,397,English
+What are the benefits of reading regularly?,Ollama,llama3.2 3b latest 2GB,10.179129362106323,7,355,English
+Explain the role of enzymes in biological reactions.,Ollama,llama3.2 3b latest 2GB,7.77065372467041,8,267,English
+What are the ethical implications of genetic engineering?,Ollama,llama3.2 3b latest 2GB,12.26604962348938,8,450,English
+How do you develop a growth mindset?,Ollama,llama3.2 3b latest 2GB,13.020339250564575,7,484,English
+What are the stages of group development?,Ollama,llama3.2 3b latest 2GB,7.937923908233643,7,297,English
+How does music influence human emotions?,Ollama,llama3.2 3b latest 2GB,13.155523538589478,6,493,English
+What is the significance of cultural heritage?,Ollama,llama3.2 3b latest 2GB,9.807058095932007,7,349,English
+How do you build strong relationships?,Ollama,llama3.2 3b latest 2GB,9.750752925872803,6,347,English
+What are the key components of a healthy diet?,Ollama,llama3.2 3b latest 2GB,9.732614755630493,9,315,English
+Explain the impact of technology on education.,Ollama,llama3.2 3b latest 2GB,11.859082221984863,7,435,English
+What are the characteristics of effective teams?,Ollama,llama3.2 3b latest 2GB,11.18242073059082,7,416,English
+How do you define and measure happiness?,Ollama,llama3.2 3b latest 2GB,12.592309713363647,7,398,English
+What are the major challenges facing the global economy?,Ollama,llama3.2 3b latest 2GB,9.709829568862915,9,341,English
+How does the brain control movement?,Ollama,llama3.2 3b latest 2GB,11.0270254611969,6,394,English
+What are the key principles of effective marketing?,Ollama,llama3.2 3b latest 2GB,8.731638193130493,8,302,English
+How does one achieve work-life balance?,Ollama,llama3.2 3b latest 2GB,12.611042976379395,6,460,English
+What are the historical milestones in the fight for women's rights?,Ollama,llama3.2 3b latest 2GB,14.615917444229126,11,481,English
+How do you identify and overcome limiting beliefs?,Ollama,llama3.2 3b latest 2GB,11.534584760665894,8,429,English
+What are the environmental impacts of fast fashion?,Ollama,llama3.2 3b latest 2GB,11.140656232833862,8,375,English
+How does one effectively set and achieve goals?,Ollama,llama3.2 3b latest 2GB,11.431073427200317,8,403,English
+What are the key features of democratic governance?,Ollama,llama3.2 3b latest 2GB,8.471603631973267,8,334,English
+How do psychological factors influence consumer spending?,Ollama,llama3.2 3b latest 2GB,9.950962781906128,7,360,English
+What are the implications of climate change for future generations?,Ollama,llama3.2 3b latest 2GB,4.466413974761963,10,170,English
+How do you create a positive workplace culture?,Ollama,llama3.2 3b latest 2GB,12.305365085601807,8,415,English
+What are the benefits of volunteering?,Ollama,llama3.2 3b latest 2GB,9.899709939956665,6,338,English
+Explain the significance of emotional intelligence.,Ollama,llama3.2 3b latest 2GB,9.113638162612915,6,323,English
+What are the key elements of a successful marketing strategy?,Ollama,llama3.2 3b latest 2GB,9.117121696472168,10,305,English
+How does one develop resilience in the face of adversity?,Ollama,llama3.2 3b latest 2GB,13.907597064971924,10,463,English
+What are the psychological effects of trauma?,Ollama,llama3.2 3b latest 2GB,11.286438941955566,7,356,English
+What is the significance of art in society?,Ollama,llama3.2 3b latest 2GB,10.764922857284546,8,380,English
+How do you foster inclusivity in the workplace?,Ollama,llama3.2 3b latest 2GB,11.739932537078857,8,395,English
+What are the main components of a balanced diet?,Ollama,llama3.2 3b latest 2GB,8.702325582504272,9,290,English
+Explain the role of government in public health.,Ollama,llama3.2 3b latest 2GB,11.68291425704956,8,446,English
+What are the effects of media on public perception?,Ollama,llama3.2 3b latest 2GB,10.315752267837524,9,361,English
+How do you create an effective learning environment?,Ollama,llama3.2 3b latest 2GB,9.574361324310303,8,323,English
+What are the benefits of critical thinking?,Ollama,llama3.2 3b latest 2GB,8.664589881896973,7,317,English
+How does one manage time effectively?,Ollama,llama3.2 3b latest 2GB,10.465148687362671,6,389,English
+What are the key factors that contribute to poverty?,Ollama,llama3.2 3b latest 2GB,10.510174751281738,9,374,English
+How do cultural norms shape behavior?,Ollama,llama3.2 3b latest 2GB,11.070493698120117,6,404,English
+What is the impact of urban design on community well-being?,Ollama,llama3.2 3b latest 2GB,8.582830429077148,10,316,English
+How does one develop effective study habits?,Ollama,llama3.2 3b latest 2GB,8.910297155380249,7,305,English
+What are the ethical challenges in business?,Ollama,llama3.2 3b latest 2GB,12.407050371170044,7,435,English
+How does one cultivate empathy in relationships?,Ollama,llama3.2 3b latest 2GB,11.952764987945557,7,438,English
+What are the benefits of lifelong learning?,Ollama,llama3.2 3b latest 2GB,10.350550889968872,7,373,English
