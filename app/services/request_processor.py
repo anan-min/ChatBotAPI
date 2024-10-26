@@ -2,7 +2,7 @@ from quart import abort
 import base64
 from mimetypes import guess_type
 from app.utils.session_manager import SessionManager
-DEFAULT_PROVIDER = "open_ai"
+DEFAULT_PROVIDER = "google"
 
 
 class RequestProcessor:

@@ -3,13 +3,15 @@ from quart import send_file, current_app
 from app.utils.session_manager import SessionManager
 import asyncio
 import time 
+
 class ResponseProcessor:
     def __init__(self) -> None:
         pass
 
-    async def process(self, session: SessionManager ):
-        audio_response = session.get_query_speech()
+    async def process(self, session: SessionManager):
+        audio_response = await session.get_query_speech()  
         file_path = files_handler.save_audio_file(audio_response)
+
         async def cleanup():
             await asyncio.sleep(1)
             files_handler.delete_file(file_path)

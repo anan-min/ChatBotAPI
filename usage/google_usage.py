@@ -1,77 +1,60 @@
-import logging
-from google.cloud import texttospeech
+import os
+import asyncio
+import aiofiles
+from pydub import AudioSegment
+from google.cloud import texttospeech, speech_v1 as speech
+from google.cloud import language_v1
+from app.configs.google_config import api_credentials, voice_configs, audio_configs, transcribe_configs
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+class GoogleProvider:
+    def __init__(self) -> None:
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = api_credentials
+        self.tts_client = texttospeech.TextToSpeechAsyncClient()  # Async client
+        self.stt_client = speech.SpeechAsyncClient()  # Async client
+        self.language_client = language_v1.LanguageServiceClient()
 
-def test_configs(voice_configs, audio_configs):
-    # Test voice configurations
-    try:
-        language_code = voice_configs.get("language_code")
-        ssml_gender = voice_configs.get("ssml_gender")
+    async def transcribe_audio_file(self, audio_file_path, transcribe_configs=transcribe_configs):
+        standardized_audio_path = await self.convert_audio_sample_rate(audio_file_path)
 
-        # Validate language code
-        if not language_code:
-            raise ValueError("Language code is required.")
-        logging.info(f"Language code: {language_code}")
+        async with aiofiles.open(standardized_audio_path, "rb") as audio_file:
+            audio_content = await audio_file.read()
 
-        # Validate ssml gender
-        if ssml_gender not in [
-            texttospeech.SsmlVoiceGender.NEUTRAL,
-            texttospeech.SsmlVoiceGender.MALE,
-            texttospeech.SsmlVoiceGender.FEMALE,
-        ]:
-            raise ValueError("Invalid SSML gender.")
-        logging.info(f"SSML gender: {ssml_gender}")
+        audio = speech.RecognitionAudio(content=audio_content)
+        config = speech.RecognitionConfig(**transcribe_configs)
 
-    except Exception as e:
-        logging.error(f"Voice configuration error: {e}")
+        response = await self.stt_client.recognize(config=config, audio=audio)
+        transcribe_text = self.process_response(response)
+        return transcribe_text
 
-    # Test audio configurations
-    try:
-        audio_encoding = audio_configs.get("audio_encoding")
-        speaking_rate = audio_configs.get("speaking_rate")
-        pitch = audio_configs.get("pitch")
-        effects_profile_id = audio_configs.get("effects_profile_id")
+    def process_response(self, response):
+        if not response.results:
+            return ""
+        transcribed_text = " ".join(result.alternatives[0].transcript for result in response.results)
+        return transcribed_text
 
-        # Validate audio encoding
-        if audio_encoding not in [
-            texttospeech.AudioEncoding.MP3,
-            texttospeech.AudioEncoding.LINEAR16,
-        ]:
-            raise ValueError("Invalid audio encoding.")
-        logging.info(f"Audio encoding: {audio_encoding}")
+    async def speech_synthesis(self, text, tts_audio_configs=audio_configs, tts_voice_configs=voice_configs):
+        synthesis_input = texttospeech.SynthesisInput(text=text)
+        voice = texttospeech.VoiceSelectionParams(**tts_voice_configs)
+        audio_config = texttospeech.AudioConfig(**tts_audio_configs)
 
-        # Validate speaking rate
-        if not (0.25 <= speaking_rate <= 4.0):
-            raise ValueError("Speaking rate must be between 0.25 and 4.0.")
-        logging.info(f"Speaking rate: {speaking_rate}")
+        response = await self.tts_client.synthesize_speech(input=synthesis_input, voice=voice, audio_config=audio_config)
+        return response.audio_content
 
-        # Validate pitch
-        if not (-20.0 <= pitch <= 20.0):
-            raise ValueError("Pitch must be between -20.0 and 20.0.")
-        logging.info(f"Pitch: {pitch}")
+    async def convert_audio_sample_rate(self, input_file_path, target_sample_rate=16000):
+        # Use a thread to avoid blocking the event loop
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, self._convert_audio_sample_rate_sync, input_file_path, target_sample_rate)
 
-        # Validate effects profile ID
-        if effects_profile_id != "standard":  # Assuming "standard" is a valid profile
-            raise ValueError("Invalid effects profile ID.")
-        logging.info(f"Effects profile ID: {effects_profile_id}")
+    def _convert_audio_sample_rate_sync(self, input_file_path, target_sample_rate):
+        input_file_path = str(input_file_path)
+        if input_file_path.endswith('.mp3'):
+            audio = AudioSegment.from_mp3(input_file_path)
+        elif input_file_path.endswith('.wav'):
+            audio = AudioSegment.from_wav(input_file_path)
+        else:
+            raise ValueError("Unsupported file format. Please use MP3 or WAV files.")
 
-    except Exception as e:
-        logging.error(f"Audio configuration error: {e}")
-
-# Example usage
-if __name__ == "__main__":
-    voice_configs = {
-        "language_code": "th-TH",
-        "ssml_gender": getattr(texttospeech.SsmlVoiceGender, "NEUTRAL")
-    }
-
-    audio_configs = {
-        "audio_encoding": texttospeech.AudioEncoding.MP3,
-        "speaking_rate": 1.0,
-        "pitch": 1.0,
-        "effects_profile_id": "standard"
-    }
-
-    test_configs(voice_configs, audio_configs)
+        audio = audio.set_frame_rate(target_sample_rate).set_channels(1)
+        audio.export(input_file_path, format="wav")
+        
+        return input_file_path

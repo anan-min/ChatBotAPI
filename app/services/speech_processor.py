@@ -26,6 +26,6 @@ class SpeechProcessor:
     async def botnoi_tts(self, text, session):
         session.set_query_speech(await self.botnoi_provider.speech_synthesis(text))
 
-    def google_tts(self, text, session):
+    async def google_tts(self, text, session):
         session.set_query_speech(self.google_provider.speech_synthesis(text))
 
