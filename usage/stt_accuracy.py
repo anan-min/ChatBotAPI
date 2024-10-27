@@ -3,6 +3,8 @@ import pandas as pd
 import asyncio
 from difflib import SequenceMatcher
 from app.providers.amazon_provider import AmazonProvider  
+from app.providers.google_provider import GoogleProvider
+from app.providers.openai_provider import OpenAIProvider
 
 
 AUDIO_FOLDER = "app/data/botnoi_test"
@@ -19,18 +21,33 @@ def load_expected_transcripts(csv_path):
         print(f"Error: CSV file not found at {csv_path}")
         return None
 
+
+def is_similar_word(word1, word2):
+    """ตรวจสอบว่าคำสองคำมีความคล้ายคลึงกันหรือไม่ เช่น การสะกดที่ต่างกันเล็กน้อย หรือคำทับศัพท์ที่ออกเสียงเหมือนกัน"""
+    # ปรับให้แยกสระ-วรรณยุกต์ที่ต่างกันออก
+    if word1 == word2:
+        return True
+    elif SequenceMatcher(None, word1, word2).ratio() > 0.85:  # ปรับค่า similarity ตามต้องการ
+        return True
+    return False
+
+
 def find_mismatched_words(actual, expected):
     actual_words = actual.split()
     expected_words = expected.split()
 
-    matcher = SequenceMatcher(None, actual_words, expected_words)
     mismatches = []
+    for i, (a_word, e_word) in enumerate(zip(actual_words, expected_words)):
+        if not is_similar_word(a_word, e_word):
+            mismatches.append(a_word)
 
-    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-        if tag != 'equal':  # ส่วนที่ไม่ตรงกัน
-            mismatches.extend(actual_words[i1:i2])
+    # กรณีที่มีจำนวนคำในประโยคไม่ตรงกัน
+    if len(actual_words) != len(expected_words):
+        extra_words = actual_words[len(expected_words):] if len(actual_words) > len(expected_words) else expected_words[len(actual_words):]
+        mismatches.extend(extra_words)
 
     return mismatches
+
 
 def calculate_levenshtein_distance(actual, expected):
     matcher = SequenceMatcher(None, actual, expected)
@@ -46,14 +63,15 @@ def save_results_to_csv(results, output_path):
     df.to_csv(output_path, index=False, encoding='utf-8-sig')
     print(f"Results saved to {output_path}")
 
+
 async def main():
-    num_iterations = 100  
+    num_iterations = 100  # ปรับตรงนี้
 
     df = load_expected_transcripts(CSV_REPORT_PATH)
     if df is None:
         return
 
-    amazon_provider = AmazonProvider(BUCKET_NAME)
+    provider = OpenAIProvider()
 
     results = []
 
@@ -68,7 +86,8 @@ async def main():
         print(f"Processing file: {filename}")
 
         try:
-            actual_text = await amazon_provider.transcribe_audio_file(audio_path)
+            actual_text = await provider.transcribe_audio_file(audio_path)
+
 
             if actual_text:
                 mismatches = find_mismatched_words(actual_text, expected_text)
@@ -83,26 +102,25 @@ async def main():
 
                 
                 results.append((
-                    "amazon", "transcribe",filename, actual_text, expected_text, 
+                    "Openai", "Whisper", filename, actual_text, expected_text, 
                     status, num_mismatches, mismatches, distance
-                    
                 ))
             else:
                 print(f"Failed to transcribe {filename}")
                 results.append((
-                    "amazon", "transcribe",filename, None, expected_text, "Failed", 
+                    "Openai", "Whisper", filename, None, expected_text, "Failed", 
                     0, [], 1.0
                 ))
         except Exception as e:
             print(f"Error processing {filename}: {e}")
             results.append((
-                "amazon", "transcribe",filename, None, expected_text, f"Error: {e}", 
+                "Openai", "Whisper", filename, None, expected_text, f"Error: {e}", 
                 0, [], 1.0
             ))
 
     print("\nSummary of Transcription Results:")
     for result in results:
-        print(f"Filename: {result[0]}, Status: {result[3]}, Mismatches: {result[4]}, Levenshtein: {result[6]:.2f}")
+        print(f"Filename: {result[2]}, Status: {result[5]}, Mismatches: {result[7]}, Levenshtein: {result[8]:.2f}")
 
     save_results_to_csv(results, RESULTS_CSV_PATH)
 
