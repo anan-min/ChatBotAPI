@@ -9,7 +9,7 @@ class OllamaProvider:
         try:
             # Start the subprocess and send the input text
             process = subprocess.Popen(
-                ["ollama", "run", "llama3.2"],
+                ["ollama", "run", "SCG_Q4"],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
