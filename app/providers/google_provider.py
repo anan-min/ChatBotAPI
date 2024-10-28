@@ -13,6 +13,9 @@ class GoogleProvider:
         self.stt_client = speech.SpeechAsyncClient()  # Async client
 
     async def transcribe_audio_file(self, audio_file_path):
+        if not audio_file_path.exists():
+            raise FileNotFoundError(f"The audio file {audio_file_path} does not exist.")
+
         standardized_audio_path = await self.convert_audio_sample_rate(audio_file_path)
 
         async with aiofiles.open(standardized_audio_path, "rb") as audio_file:
@@ -21,7 +24,20 @@ class GoogleProvider:
         audio = speech.RecognitionAudio(content=audio_content)
         config = speech.RecognitionConfig(**transcribe_configs)
 
-        response = await self.stt_client.recognize(config=config, audio=audio)
+        # Create a RecognizeRequest with both config and audio
+        request = speech.RecognizeRequest(config=config, audio=audio)
+
+        loop = asyncio.get_event_loop()
+        try:
+            # Call recognize with a single request object
+            response = await self.stt_client.recognize(request)
+        except Exception as e:
+            print(f"An error occurred during transcription: {e}")
+            return None
+
+        transcribe_text = self.process_response(response)
+        return transcribe_text
+
 
         transcribe_text = self.process_response(response)
         return transcribe_text
@@ -60,21 +76,21 @@ class GoogleProvider:
         standardized_audio_path = await loop.run_in_executor(None, sync_convert_audio)
         return standardized_audio_path
 
-async def main():
-    provider = GoogleProvider()
-    AUDIO_FILE_PATH = Path(__file__).parent.parent / 'data' / 'test' / 'voice5.wav'
-    SAVE_PATH = Path(__file__).parent.parent / 'data' / 'test' / 'test1.wav'
+# async def main():
+#     provider = GoogleProvider()
+#     AUDIO_FILE_PATH = Path(__file__).parent.parent / 'data' / 'test' / 'voice5.wav'
+#     SAVE_PATH = Path(__file__).parent.parent / 'data' / 'test' / 'test1.wav'
 
-    # Transcribe audio file
-    transcribed_text = await provider.transcribe_audio_file(AUDIO_FILE_PATH)
-    print("Transcribed Text:", transcribed_text)
+#     # Transcribe audio file
+#     transcribed_text = await provider.transcribe_audio_file(AUDIO_FILE_PATH)
+#     print("Transcribed Text:", transcribed_text)
 
-    # Synthesize speech
-    if transcribed_text:
-        audio_content = await provider.speech_synthesis(transcribed_text)
-        async with aiofiles.open(SAVE_PATH, 'wb') as out_file:
-            await out_file.write(audio_content)
-        print(f"Synthesized speech saved to {SAVE_PATH}")
+#     # Synthesize speech
+#     if transcribed_text:
+#         audio_content = await provider.speech_synthesis(transcribed_text)
+#         async with aiofiles.open(SAVE_PATH, 'wb') as out_file:
+#             await out_file.write(audio_content)
+#         print(f"Synthesized speech saved to {SAVE_PATH}")
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(main())

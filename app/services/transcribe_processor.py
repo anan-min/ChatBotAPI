@@ -39,6 +39,7 @@ class TranscribeProcessor:
     
     async def google_transcribe(self, audio_file):
         audio_file_path = files_handler.save_audio_file(audio_file)
+        # audio_file_path = Path(audio_file_path)
         try:
             return await self.google_provider.transcribe_audio_file(audio_file_path)
         finally:
