@@ -28,18 +28,17 @@ class GoogleProvider:
 
         # Request transcribe text with config and audio asynchronously
         print("05: start request transcribe text")
+        response = "I'm sorry, there was an error processing your audio."
         loop = asyncio.get_event_loop()
         try:
-            response = await loop.run_in_executor(None, self.stt_client.recognize, config=config, audio=audio)
+            response = await loop.run_in_executor(None, lambda: self.stt_client.recognize(config=config, audio=audio))
         except Exception as e:
             print(f"An error occurred: {e}")
-
-
-        print(f"06: request transcribe text response: {response}")
-        # Process text from response and return it
+            return None  # or handle the error as appropriate for your application
+            # Process text from response and return it
         transcribe_text = self.process_response(response)
         return transcribe_text
-        
+            
     # Generate text from Google API transcribe response 
     def process_response(self, response):
         if not response.results:
