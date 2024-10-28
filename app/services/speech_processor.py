@@ -11,11 +11,15 @@ class SpeechProcessor:
     async def process(self, session: SessionManager):
         tts_provider = session.get_tts_provider()
         text = session.get_query_text()
+        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        print(text)
+        print(tts_provider)
+        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
         if tts_provider == 'botnoi':
             await self.botnoi_tts(text, session)
-        elif tts_provider == 'openai':
-            self.google_tts(text, session)
+        elif tts_provider == 'google':
+            await self.google_tts(text, session)
         else:
             await self.openai_tts(text, session)
         
