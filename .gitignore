@@ -1,8 +1,26 @@
+	# Ignore environment variables file
 .env
-**/__pycache__/
-/app/configs/google_api_key.json
-app/services/__pycache__/speech_processor.cpython-312.pyc
-app/services/__pycache__/transcribe_processor.cpython-312.pyc
-app/providers/__pycache__/openai_provider.cpython-312.pyc
-app/services/__pycache__/speech_processor.cpython-312.pyc
-app/services/__pycache__/transcribe_processor.cpython-312.pyc
+
+# Ignore bytecode files and cache directories
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment directory
+venv/
+
+# Ignore other common files
+*.db
+*.log
+*.DS_Store
+
+# Ignore cache directories for testing
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Ignore IDE-specific settings
+.idea/
+.vscode/
+app/configs/google_api_key.json
