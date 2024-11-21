@@ -3,13 +3,16 @@ import time
 import csv
 from pathlib import Path
 from pythainlp import word_tokenize
+import app.utils.files_handler as files_handler
 from collections import Counter
 from app.providers import OpenAIProvider
 from app.providers import AmazonProvider
 from app.providers.google_provider import GoogleProvider
 from app.providers.ollama_provider import OllamaProvider
+from app.providers.botnoi_provider import BotnoiProvider
 import pandas as pd 
 import asyncio
+
 
 
 audio_dir_path = Path(__file__).parent.parent / 'app' / 'data' / 'sample'
@@ -195,4 +198,109 @@ async def generate_query_openai_report(csv_filename):
 
 
 
-asyncio.run(generate_query_openai_report("query_openai_report"))
+
+async def generate_tts_openai_report(csv_filename):
+
+    count = 0 
+
+    csv_file_path = report_dir_path / f"{csv_filename}.csv"
+    openai_provider = OpenAIProvider()
+
+    model = "tts-1"
+    provider = "openai"
+
+    with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(["Question Number", "Word Count",
+                            "File size(Mb)", "Time Taken (s)", "Provider", "Model", "Text"])
+        for text in questions_list:
+            if count >= 10:
+                break
+            start_time = time.time()
+            audio_content = await openai_provider.speech_synthesis(text)
+            end_time = time.time()
+
+            file_path = files_handler.save_audio_file(audio_content)
+            file_size = os.path.getsize(file_path) / (1024 * 1024)
+            files_handler.delete_file(file_path)
+
+            time_taken = end_time - start_time
+            word_count = count_thai_words(text)
+
+            count += 1
+
+            csv_writer.writerow(
+                [count, word_count, file_size, time_taken, provider, model, text])
+
+
+
+def generate_tts_google_report(csv_filename):
+
+    count = 0 
+
+    csv_file_path = report_dir_path / f"{csv_filename}.csv"
+    google_provider = GoogleProvider()
+
+    model = "tts-1"
+    provider = "openai"
+
+    with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(["Question Number", "Word Count",
+                            "File size(Mb)", "Time Taken (s)", "Provider", "Model", "Text"])
+        for text in questions_list:
+            if count >= 10:
+                break
+            start_time = time.time()
+            audio_content = google_provider.speech_synthesis(text)
+            end_time = time.time()
+
+            file_path = files_handler.save_audio_file(audio_content)
+            file_size = os.path.getsize(file_path) / (1024 * 1024)
+            files_handler.delete_file(file_path)
+
+            time_taken = end_time - start_time
+            word_count = count_thai_words(text)
+
+            count += 1
+
+            csv_writer.writerow(
+                [count, word_count, file_size, time_taken, provider, model, text])
+
+
+
+async def generate_tts_botnoi_report(csv_filename):
+
+    count = 0 
+
+    csv_file_path = report_dir_path / f"{csv_filename}.csv"
+    botnoi_provider = BotnoiProvider()
+
+    model = "tts-1"
+    provider = "openai"
+
+    with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(["Question Number", "Word Count",
+                            "File size(Mb)", "Time Taken (s)", "Provider", "Model", "Text"])
+        for text in questions_list:
+            if count >= 10:
+                break
+            start_time = time.time()
+            audio_content = await botnoi_provider.speech_synthesis(text)
+            end_time = time.time()
+
+            file_path = files_handler.save_audio_file(audio_content)
+            file_size = os.path.getsize(file_path) / (1024 * 1024)
+            files_handler.delete_file(file_path)
+
+            time_taken = end_time - start_time
+            word_count = count_thai_words(text)
+
+            count += 1
+
+            csv_writer.writerow(
+                [count, word_count, file_size, time_taken, provider, model, text])
+
+
+asyncio.run(generate_tts_botnoi_report('tts_botnoi_report'))
