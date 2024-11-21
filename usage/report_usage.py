@@ -19,7 +19,7 @@ th_questions_path = report_dir_path / 'thai_questions_1k.csv'
 
 df = pd.read_csv(th_questions_path)
 questions_list = df['Question'].tolist()
-print(questions_list)
+print(f"number of questions: {len(questions_list)}")
 
 
 def count_thai_words(text):
@@ -120,5 +120,79 @@ def generate_stt_google_report(csv_filename):
             csv_writer.writerow(
                 [count, filename, file_size, time_taken, word_count, transcribed_data])
 
-def generate_stt_ollama_report(csv_filename):
-    pass 
+async def generate_query_ollama_report(csv_filename):
+
+    count = 0 
+
+    csv_file_path = report_dir_path / f"{csv_filename}.csv"
+    ollama_provider = OllamaProvider()
+
+    model = "llama3.2"
+    provider = "ollama-local"
+
+    with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(["Question Number", "Input Word Count",
+                            "Output Word Count", "Time Taken (s)", "Provider","Model", "Question", "Answer"])
+        for question in questions_list:
+            if count >= 10:
+                break
+            start_time = time.time()
+            answer = await ollama_provider.query_text_file(question)
+            end_time = time.time()
+
+            time_taken = end_time - start_time
+            input_word_count = count_thai_words(question)
+            output_word_count = count_thai_words(answer)
+
+            print(f"Question: {question}")
+            print(f"Answer: {answer}")
+            print(f"Input word count: {input_word_count}")
+            print(f"Output word count: {output_word_count}")
+            print(f"Time taken: {time_taken} seconds")
+
+            count  += 1
+
+            csv_writer.writerow(
+                [count, input_word_count, output_word_count, time_taken, provider, model, question, answer])
+
+
+async def generate_query_openai_report(csv_filename):
+
+    count = 0 
+
+    csv_file_path = report_dir_path / f"{csv_filename}.csv"
+    openai_provider = OpenAIProvider()
+
+    model = "gpt-4o"
+    provider = "openai"
+
+    with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(["Question Number", "Input Word Count",
+                            "Output Word Count", "Time Taken (s)", "Provider","Model", "Question"])
+        for question in questions_list:
+            if count >= 10:
+                break
+            start_time = time.time()
+            answer = await openai_provider.query_text_file(question, model)
+            end_time = time.time()
+
+            time_taken = end_time - start_time
+            input_word_count = count_thai_words(question)
+            output_word_count = count_thai_words(answer)
+
+            print(f"Question: {question}")
+            print(f"Answer: {answer}")
+            print(f"Input word count: {input_word_count}")
+            print(f"Output word count: {output_word_count}")
+            print(f"Time taken: {time_taken} seconds")
+
+            count  += 1
+
+            csv_writer.writerow(
+                [count, input_word_count, output_word_count, time_taken, provider, model, question])
+
+
+
+asyncio.run(generate_query_openai_report("query_openai_report"))

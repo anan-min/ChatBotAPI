@@ -33,13 +33,13 @@ class OpenAIProvider:
                 response_format='verbose_json'
             ).text
     
-    async def query_text_file(self, text):
+    async def query_text_file(self, text, model="gpt-4o-mini"):
         # Since OpenAI's client library is not inherently asynchronous, run in executor
         loop = asyncio.get_running_loop()
         completion = await loop.run_in_executor(
             None,
             lambda: self.client.chat.completions.create(
-                model="gpt-4",
+                model=model,
                 messages=[
                     {"role": "system", "content": text},
                 ]
