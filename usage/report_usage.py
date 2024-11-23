@@ -19,7 +19,6 @@ audio_dir_path = Path(__file__).parent.parent / 'app' / 'data' / 'sample'
 report_dir_path = Path(__file__).parent.parent / 'app' / 'data' / 'report'
 th_questions_path = report_dir_path / 'thai_questions_1k.csv'
 
-
 df = pd.read_csv(th_questions_path)
 questions_list = df['Question'].tolist()
 print(f"number of questions: {len(questions_list)}")
@@ -32,7 +31,7 @@ def count_thai_words(text):
 
 
 async def generate_stt_openai_report(csv_file_name):
-    max_count = 10
+    max_count = 1000
     count = 0
     openai_provider = OpenAIProvider()
 
@@ -40,14 +39,17 @@ async def generate_stt_openai_report(csv_file_name):
 
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["File Number", "File Name",
-                            "File Size (bytes)", "Time Taken (s)", "Word Count", "Transcribed Text"])
+        csv_writer.writerow(["file_number", "file_name",
+                            "file_size", "time_taken", "word_count", "transcribed_text", "provider", "model"])
+        
+        provider = "openai"
+        model = "stt"
 
         for filename in os.listdir(audio_dir_path):
             if count > max_count:
                 break
             file_path = audio_dir_path / filename
-            file_size = os.path.getsize(file_path)
+            file_size = os.path.getsize(file_path) / 1024
             start_time = time.time()
             transcribed_data = await openai_provider.transcribe_audio_file(file_path)
             end_time = time.time()
@@ -59,11 +61,10 @@ async def generate_stt_openai_report(csv_file_name):
             count += 1
 
             csv_writer.writerow(
-                [count, filename, file_size, time_taken, word_count, transcribed_data])
+                [count, filename, file_size, time_taken, word_count, transcribed_data, provider, model])
 
 
-async def generate_stt_amazon_report(csv_filename):
-    max_count = 10
+async def generate_stt_amazon_report(csv_filename): 
     count = 0
     amazon_provider = AmazonProvider('speech-to-text-storage')
 
@@ -71,14 +72,18 @@ async def generate_stt_amazon_report(csv_filename):
 
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["File Number", "File Name",
-                            "File Size (bytes)", "Time Taken (s)", "Word Count", "Transcribed Text"])
+        csv_writer.writerow(["file_number", "file_name",
+                            "file_size", "time_taken", "word_count", "transcribed_text", "provider", "model"])
+        provider = "amazon"
+        model = "stt"
 
         for filename in os.listdir(audio_dir_path):
-            if count > max_count:
+            if count > 10:
                 break
+
+            print(f"File {count} {filename}")
             file_path = audio_dir_path / filename
-            file_size = os.path.getsize(file_path)
+            file_size = os.path.getsize(file_path) / 1024
             start_time = time.time()
             transcribed_data = await amazon_provider.transcribe_audio_file(file_path)
             end_time = time.time()
@@ -90,7 +95,7 @@ async def generate_stt_amazon_report(csv_filename):
             count += 1
 
             csv_writer.writerow(
-                [count, filename, file_size, time_taken, word_count, transcribed_data])
+                [count, filename, file_size, time_taken, word_count, transcribed_data, provider, model])
 
 
 def generate_stt_google_report(csv_filename):
@@ -102,12 +107,16 @@ def generate_stt_google_report(csv_filename):
 
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["File Number", "File Name",
-                            "File Size (bytes)", "Time Taken (s)", "Word Count", "Transcribed Text"])
+        csv_writer.writerow(["file_number", "file_name",
+                            "file_size", "time_taken", "word_count", "transcribed_text", "provider", "model"])
+        provider = "google"
+        model = "stt"
 
         for filename in os.listdir(audio_dir_path):
-            if count > max_count:
+            if count >= max_count:
                 break
+
+            print(f"working on file {count} {filename}")
             file_path = audio_dir_path / filename
             file_size = os.path.getsize(file_path)
             start_time = time.time()
@@ -121,7 +130,8 @@ def generate_stt_google_report(csv_filename):
             count += 1
 
             csv_writer.writerow(
-                [count, filename, file_size, time_taken, word_count, transcribed_data])
+                [count, filename, file_size, time_taken, word_count, transcribed_data, provider, model])
+
 
 async def generate_query_ollama_report(csv_filename):
 
@@ -135,8 +145,8 @@ async def generate_query_ollama_report(csv_filename):
 
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["Question Number", "Input Word Count",
-                            "Output Word Count", "Time Taken (s)", "Provider","Model", "Question", "Answer"])
+        csv_writer.writerow(["question_number", "input_word_count",
+                            "output_word_count", "time_taken", "provider","model", "question", "answer"])
         for question in questions_list:
             if count >= 10:
                 break
@@ -172,8 +182,8 @@ async def generate_query_openai_report(csv_filename):
 
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["Question Number", "Input Word Count",
-                            "Output Word Count", "Time Taken (s)", "Provider","Model", "Question"])
+        csv_writer.writerow(["question_number", "input_word_count",
+                            "output_word_count", "time_taken", "provider","model", "question", "answer"])
         for question in questions_list:
             if count >= 10:
                 break
@@ -198,7 +208,6 @@ async def generate_query_openai_report(csv_filename):
 
 
 
-
 async def generate_tts_openai_report(csv_filename):
 
     count = 0 
@@ -211,17 +220,18 @@ async def generate_tts_openai_report(csv_filename):
 
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["Question Number", "Word Count",
-                            "File size(Mb)", "Time Taken (s)", "Provider", "Model", "Text"])
+        csv_writer.writerow(["text_number", "word_count",
+                            "file_size", "time_taken", "provider", "model", "text"])
         for text in questions_list:
-            if count >= 10:
+            if count > 1000:
                 break
+            print(f"working on question {count}, text: {text}")
             start_time = time.time()
             audio_content = await openai_provider.speech_synthesis(text)
             end_time = time.time()
 
             file_path = files_handler.save_audio_file(audio_content)
-            file_size = os.path.getsize(file_path) / (1024 * 1024)
+            file_size = os.path.getsize(file_path) / 1024
             files_handler.delete_file(file_path)
 
             time_taken = end_time - start_time
@@ -241,16 +251,17 @@ def generate_tts_google_report(csv_filename):
     csv_file_path = report_dir_path / f"{csv_filename}.csv"
     google_provider = GoogleProvider()
 
-    model = "tts-1"
-    provider = "openai"
+    model = "tts"
+    provider = "google"
 
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["Question Number", "Word Count",
-                            "File size(Mb)", "Time Taken (s)", "Provider", "Model", "Text"])
+        csv_writer.writerow(["text_number", "word_count",
+                            "file_size", "time_taken", "provider", "model", "text"])
         for text in questions_list:
-            if count >= 10:
+            if count > 1000:
                 break
+            print(f"Text:{text}, number: {count}")
             start_time = time.time()
             audio_content = google_provider.speech_synthesis(text)
             end_time = time.time()
@@ -276,16 +287,17 @@ async def generate_tts_botnoi_report(csv_filename):
     csv_file_path = report_dir_path / f"{csv_filename}.csv"
     botnoi_provider = BotnoiProvider()
 
-    model = "tts-1"
-    provider = "openai"
+    model = "tts"
+    provider = "botnoi"
 
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["Question Number", "Word Count",
-                            "File size(Mb)", "Time Taken (s)", "Provider", "Model", "Text"])
+        csv_writer.writerow(["text_number", "word_count",
+                            "file_size", "time_taken", "provider", "model", "text"])
         for text in questions_list:
-            if count >= 10:
+            if count >= 1000:
                 break
+            print(f"working on question {count}")
             start_time = time.time()
             audio_content = await botnoi_provider.speech_synthesis(text)
             end_time = time.time()
@@ -303,4 +315,16 @@ async def generate_tts_botnoi_report(csv_filename):
                 [count, word_count, file_size, time_taken, provider, model, text])
 
 
-asyncio.run(generate_tts_botnoi_report('tts_botnoi_report'))
+
+
+# stt 
+# asyncio.run(generate_stt_amazon_report('stt_amazon_report'))
+generate_stt_google_report('stt_google_report')
+# asyncio.run(generate_stt_openai_report('stt_openai_report'))
+
+
+# tts done 
+
+# asyncio.run(generate_tts_botnoi_report('tts_botnoi_report'))
+# generate_tts_google_report('tts_google_report')
+# asyncio.run(generate_tts_openai_report('tts_openai_report'))
