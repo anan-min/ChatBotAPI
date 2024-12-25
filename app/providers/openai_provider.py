@@ -20,7 +20,6 @@ class OpenAIProvider:
             audio_file_path 
         )
         end_time = time.time()
-        print(f"Transcription from openapi took {end_time - start_time} seconds to complete")
 
         return transcribed_data
     
@@ -56,7 +55,6 @@ class OpenAIProvider:
             lambda: self.client.audio.speech.create(model='tts-1', voice="alloy", input=text)
         )
         end_time = time.time()
-        print(f"Speech synthesis from openai took {end_time - start_time} seconds to complete")
         result = b''.join([chunk for chunk in response.iter_bytes()])
         return result
 

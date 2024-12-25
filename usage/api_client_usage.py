@@ -32,13 +32,11 @@ def send_audio_file(api_url, file_path):
 
     end_time = time.time()
 
-    print(f"API call took {end_time - start_time} seconds to complete")
     
     if response.status_code == 200:
         with open(SAVE_PATH, 'wb') as file:
             for chunk in response.iter_content(chunk_size=8192): 
                 file.write(chunk)
-        print(f"File successfully downloaded and saved to {SAVE_PATH}")
     else:
         print(f"Failed to download the file: {response.status_code} - {response.text}")
 

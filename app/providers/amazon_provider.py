@@ -25,7 +25,6 @@ class AmazonProvider:
     async def transcribe_audio_file(self, audio_file_path):
         job_name = "transcribe-job-" + str(int(time.time() * 1000))
         job_uri = self.store_audio_as_uri(audio_file_path)
-        print(f"Started transcription job: {job_name} for URI: {job_uri}")
 
         
         self.stt.start_transcription_job(
@@ -42,26 +41,21 @@ class AmazonProvider:
 
 
     async def process_response(self, job_name, check_interval):
-        print(f"Checking transcription status for job: {job_name}")
         while True:
             status = self.stt.get_transcription_job(TranscriptionJobName=job_name)
             if status['TranscriptionJob']['TranscriptionJobStatus'] in ['COMPLETED', 'FAILED']:
-                print(f"Transcription job {job_name} status: {status['TranscriptionJob']['TranscriptionJobStatus']}")
                 break
             await asyncio.sleep(check_interval)  # ใช้ asyncio.sleep แทน time.sleep เพื่อรองรับ async
 
         if status['TranscriptionJob']['TranscriptionJobStatus'] == 'COMPLETED':
             transcript_file_uri = status['TranscriptionJob']['Transcript']['TranscriptFileUri']
-            print(f"Transcription completed. Transcript available at: {transcript_file_uri}")
             return self.parse_transcript_uri(transcript_file_uri)
         else:
-            print(f"Transcription job failed: {status['TranscriptionJob']['FailureReason']}")
             return None
 
 
 
     def parse_transcript_uri(self, transcript_file_uri):
-        print(f"Parsing transcript URI: {transcript_file_uri}")
         parsed_uri = urlparse(transcript_file_uri)
         key = parsed_uri.path.lstrip('/')
 
@@ -71,7 +65,6 @@ class AmazonProvider:
 
             transcript_data = response.json()  
             transcript_text = transcript_data['results']['transcripts'][0]['transcript']
-            print(f"Transcript text: {transcript_text}")
             return transcript_text
         except requests.exceptions.HTTPError as e:
             print(f"HTTP error occurred: {e}")
@@ -90,7 +83,6 @@ class AmazonProvider:
         
         try:
             self.s3_client.upload_file(str(audio_file_path), self.bucket_name, s3_key)
-            print(f"Audio file {file_name} uploaded to S3 at: s3://{self.bucket_name}/{s3_key}")
         except:
             pass
 

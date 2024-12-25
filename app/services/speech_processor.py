@@ -15,7 +15,7 @@ class SpeechProcessor:
         if tts_provider == 'botnoi':
             await self.botnoi_tts(text, session)
         elif tts_provider == 'openai':
-            self.google_tts(text, session)
+            await self.openai_tts(text, session)
         else:
             await self.openai_tts(text, session)
         

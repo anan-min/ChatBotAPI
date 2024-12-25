@@ -10,6 +10,7 @@ class ResponseProcessor:
     async def process(self, session: SessionManager ):
         audio_response = session.get_query_speech()
         file_path = files_handler.save_audio_file(audio_response)
+        print(f"\nSpeech response: {file_path}")
         async def cleanup():
             await asyncio.sleep(1)
             files_handler.delete_file(file_path)
