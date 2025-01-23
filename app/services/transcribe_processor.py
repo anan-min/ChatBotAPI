@@ -17,6 +17,8 @@ class TranscribeProcessor:
         audio_file = session.get_client_audio_file()
         provider_name = session.get_stt_provider()
 
+        print(f"transcribe_provider_name: {provider_name}")
+
         result = None
         if provider_name == 'google':
             result = await self.google_transcribe(audio_file)
