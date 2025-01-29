@@ -8,8 +8,8 @@ def test_parse_data():
 
     request_processor = RequestProcessor()
     request_data = {
-        "stt_provider": "openai",
-        "tts_provider": "openai",
+        "stt_provider": "google",
+        "tts_provider": "google",
         "query_provider": "openai",
         "audio-file": "test/test_audio.mp3"
     }
