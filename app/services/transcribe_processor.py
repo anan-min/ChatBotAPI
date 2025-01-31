@@ -18,14 +18,12 @@ class TranscribeProcessor:
         print(f"transcribe_provider_name: {provider_name}")
 
         result = None
-        # if provider_name == 'google':
-        #     result = await self.google_transcribe(audio_file)
-        # elif provider_name == 'azure':
-        #     result =  await self.azure_transcribe(audio_file)
-        # elif provider_name == 'aws':
-        #     result =  await self.aws_transcribe(audio_file)
-        # else:
-        result = await self.google_transcribe(audio_file)
+        if provider_name == 'google':
+            result = await self.google_transcribe(audio_file)
+        elif provider_name == 'aws':
+            result =  await self.aws_transcribe(audio_file)
+        else:
+            result = await self.openai_transcribe(audio_file)
         session.set_transcribe_text(result)
   
 
