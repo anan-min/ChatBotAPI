@@ -33,7 +33,6 @@ async def provider_performance_testing(provider, provider_name, model, max_text=
     texts = load_texts_from_csv(dataset_path, max_text)
 
     for idx, text in enumerate(texts):
-        print(f"Processing text {idx + 1}/{max_text}: {text}")
 
         start_time = time.time()
         audio_url = await provider.speech_synthesis(text)  # ใช้ await ในการเรียก coroutine

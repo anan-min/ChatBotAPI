@@ -40,7 +40,6 @@ def provider_performance_testing(provider, provider_name, model, max_files=1):
                 file_size = os.path.getsize(file_path)
                 word_count = count_thai_words(transcribed_data)
 
-                print(f"File {count} {filename} took {time_taken} seconds to transcribe and {word_count} words were transcribed.")
 
                 write_csv(csv_path, filename, provider_name, model, time_taken, file_size, word_count, transcribed_data)
                 count += 1

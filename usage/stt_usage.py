@@ -1,11 +1,10 @@
 from app.providers.botnoi_provider import BotnoiProvider
 from pathlib import Path
 from app.providers.amazon_provider import AmazonProvider
+from app.providers.google_provider import GoogleProvider
 
 
 SAVE_PATH = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'speech.wav'
-
-
 AUDIO_FILE_PATH = Path(__file__).parent.parent / 'app' / 'data' / 'test' / 'voice.wav'
 
 thai_text = """แน่นอน! นี่คือประโยคภาษาไทยที่ยาวและซับซ้อนสำหรับใช้ในการทดสอบระบบสังเคราะห์เสียงพูด:
@@ -14,9 +13,13 @@ thai_text = """แน่นอน! นี่คือประโยคภาษ
 
 
 if __name__ == '__main__':
-    botnoi = BotnoiProvider()
-    botnoi.download_audio_file(botnoi.speech_synthesis(thai_text), SAVE_PATH)
+    # botnoi = BotnoiProvider()
+    # botnoi.download_audio_file(botnoi.speech_synthesis(thai_text), SAVE_PATH)
 
-    amazon = AmazonProvider('speech-to-text-storage')
-    transcribe_text = amazon.transcribe_audio_file(SAVE_PATH)
-    print(transcribe_text)
+    # amazon = AmazonProvider('speech-to-text-storage')
+    # transcribe_text = amazon.transcribe_audio_file(SAVE_PATH)
+    # print(transcribe_text)
+
+    google = GoogleProvider()
+    transcibed_text = google.transcribe_audio_file(AUDIO_FILE_PATH)
+    print(f"Transcribed text: {transcibed_text}")

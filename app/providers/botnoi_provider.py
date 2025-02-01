@@ -24,7 +24,6 @@ class BotnoiProvider:
             lambda: self._sync_speech_synthesis(text)  # เรียกฟังก์ชัน synchronous
         )
         end_time = time.time()
-        print(f"Speech synthesis from Botnoi took {end_time - start_time} seconds to complete")
         return response
 
     def _sync_speech_synthesis(self, text):

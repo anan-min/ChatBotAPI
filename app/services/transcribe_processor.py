@@ -11,22 +11,19 @@ class TranscribeProcessor:
         self.amazon_provider= AmazonProvider(bucket_name)
         self.google_provider = GoogleProvider()
 
-
-    
     async def process(self, session: SessionManager):
         audio_file = session.get_client_audio_file()
         provider_name = session.get_stt_provider()
 
+        print(f"transcribe_provider_name: {provider_name}")
+
         result = None
         if provider_name == 'google':
             result = await self.google_transcribe(audio_file)
-        elif provider_name == 'azure':
-            result =  await self.azure_transcribe(audio_file)
         elif provider_name == 'aws':
             result =  await self.aws_transcribe(audio_file)
         else:
-            result =  await self.openai_transcribe(audio_file)
-        
+            result = await self.openai_transcribe(audio_file)
         session.set_transcribe_text(result)
   
 
