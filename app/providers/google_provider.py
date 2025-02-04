@@ -18,21 +18,20 @@ class GoogleProvider:
         self.language_client = language_v1.LanguageServiceClient()
 
     # Making transcribe_audio_file async
+
     async def transcribe_audio_file(self, audio_file_path, transcribe_configs=transcribe_configs):
-        # Convert audio sample rate if needed (make sure this is non-blocking too)
+        # Convert audio sample rate asynchronously
         convert_audio_file_path = await asyncio.to_thread(self.convert_audio_sample_rate, audio_file_path)
 
-        # Read audio content from the converted audio file
-        with open(convert_audio_file_path, "rb") as audio_file:
-            audio_content = audio_file.read()
+        # Asynchronously read audio content
+        async with aiofiles.open(convert_audio_file_path, "rb") as audio_file:
+            audio_content = await audio_file.read()
         
         audio = speech.RecognitionAudio(content=audio_content)
         config = speech.RecognitionConfig(**transcribe_configs)
 
-        # Request transcription and process the response
+        # Asynchronously request transcription
         response = await asyncio.to_thread(self.stt_client.recognize, config=config, audio=audio)
-        
-        # Process the transcription result
         transcribe_text = self.process_response(response)
         return transcribe_text
 
