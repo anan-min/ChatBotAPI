@@ -3,6 +3,10 @@ from app.services import (TranscribeProcessor, QueryProcessor, SpeechProcessor, 
 from app.services.response_processor import ResponseProcessor
 from app.utils import files_handler
 from app.utils.session_manager import SessionManager
+
+from app.services.sentiment_processor import SentimentProcessor
+import asyncio
+
 from app.utils.timing import timing
 
 def setup_routes(app: Quart):
@@ -12,6 +16,7 @@ def setup_routes(app: Quart):
     speech_processor = SpeechProcessor()
     request_processor = RequestProcessor()
     response_processor = ResponseProcessor()
+    sentimentProcessor = SentimentProcessor()
 
     @app.route("/", methods=["POST"])
     async def index():
@@ -28,7 +33,10 @@ def setup_routes(app: Quart):
             print(f"\nQuery response: {session.get_query_text()}")
 
         with timing("Speech processing"):
-            await speech_processor.process(session)
+            await asyncio.gather(
+                speech_processor.process(session),
+                sentimentProcessor.process(session)
+            )
 
 
         return await response_processor.process(session)

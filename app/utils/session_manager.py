@@ -8,6 +8,7 @@ class SessionManager:
         self.transcribe_text = None
         self.query_text = None
         self.query_speech = None
+        self.sentiment_profile = None
 
     # Getters
     def get_stt_provider(self):
@@ -30,6 +31,12 @@ class SessionManager:
 
     def get_query_speech(self):
         return self.query_speech
+    
+    def get_sentiment_profile(self):
+        return self.sentiment_profile
+    
+    def set_sentiment_profile(self, profile):
+        self.sentiment_profile = profile
 
     # Setters
     def set_stt_provider(self, stt):
@@ -52,3 +59,6 @@ class SessionManager:
 
     def set_query_speech(self, speech):
         self.query_speech = speech
+
+
+    
