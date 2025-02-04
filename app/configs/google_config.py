@@ -7,7 +7,7 @@ api_credentials = str(current_dir / 'google_api_key.json')
 
 voice_configs = {
     "language_code": "th-TH",
-    "ssml_gender": texttospeech.SsmlVoiceGender.NEUTRAL
+    "ssml_gender": texttospeech.SsmlVoiceGender.MALE
 }
 
 audio_configs = {

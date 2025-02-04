@@ -52,19 +52,6 @@ class GoogleProvider:
         # Return the generated audio content
         return response.audio_content
 
-    # def convert_audio_sample_rate(self, input_file_path, target_sample_rate=16000):
-    #     # Load the audio file with librosa
-    #     audio_data, original_sample_rate = librosa.load(input_file_path, sr=None)
-        
-    #     # Resample the audio to the target sample rate
-    #     audio_resampled = librosa.resample(audio_data, orig_sr=original_sample_rate, target_sr=target_sample_rate)
-
-    #     # Save the resampled audio as a WAV file
-    #     output_file_path = os.path.splitext(input_file_path)[0] + ".wav"
-    #     sf.write(output_file_path, audio_resampled, target_sample_rate)
-    #     return output_file_path
-
-
     def convert_audio_sample_rate(self, input_file_path, target_sample_rate=16000):
         # Open the audio file with audioread
         with audioread.audio_open(input_file_path) as f:

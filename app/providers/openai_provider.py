@@ -52,7 +52,7 @@ class OpenAIProvider:
         start_time = time.time()
         response = await loop.run_in_executor(
             None,
-            lambda: self.client.audio.speech.create(model='tts-1', voice="alloy", input=text)
+            lambda: self.client.audio.speech.create(model='tts-1', voice="ash", input=text)
         )
         end_time = time.time()
         result = b''.join([chunk for chunk in response.iter_bytes()])

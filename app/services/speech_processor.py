@@ -19,7 +19,7 @@ class SpeechProcessor:
         elif tts_provider == 'openai':
             await self.openai_tts(text, session)
         else:
-            await self.openai_tts(text, session)
+            await self.google_tts(text, session)
         
 
     async def openai_tts(self, text, session):
@@ -28,6 +28,6 @@ class SpeechProcessor:
     async def botnoi_tts(self, text, session):
         session.set_query_speech(await self.botnoi_provider.speech_synthesis(text))
 
-    def google_tts(self, text, session):
-        session.set_query_speech(self.google_provider.speech_synthesis(text))
+    async def google_tts(self, text, session):
+        session.set_query_speech(await self.google_provider.speech_synthesis(text))
 
