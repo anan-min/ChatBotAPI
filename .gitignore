@@ -25,3 +25,4 @@ venv/
 .vscode/
 app/configs/google_api_key.json
 DockerFile
+google_api_key.json

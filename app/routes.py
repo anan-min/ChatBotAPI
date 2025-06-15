@@ -1,9 +1,9 @@
 from quart import Quart, request
-from app.services import (TranscribeProcessor, QueryProcessor, SpeechProcessor, RequestProcessor)
-from app.services.response_processor import ResponseProcessor
-from app.utils import files_handler
-from app.utils.session_manager import SessionManager
-from app.utils.timing import timing
+from services import (TranscribeProcessor, QueryProcessor, SpeechProcessor, RequestProcessor)
+from services.response_processor import ResponseProcessor
+from utils import files_handler
+from utils.session_manager import SessionManager
+from utils.timing import timing
 
 def setup_routes(app: Quart):
     files_handler.delete_temp_files()
