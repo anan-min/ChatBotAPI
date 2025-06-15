@@ -1,6 +1,6 @@
-from app.utils import files_handler
+from utils import files_handler
 from quart import send_file, current_app, jsonify
-from app.utils.session_manager import SessionManager
+from utils.session_manager import SessionManager
 import asyncio
 import time 
 import base64

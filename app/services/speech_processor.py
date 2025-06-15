@@ -1,6 +1,7 @@
-from app.providers import OpenAIProvider, BotnoiProvider
-from app.providers.google_provider import GoogleProvider
-from app.utils.session_manager import SessionManager
+from providers.openai_provider import OpenAIProvider
+from providers.botnoi_provider import BotnoiProvider
+from providers.google_provider import GoogleProvider
+from utils.session_manager import SessionManager
 
 class SpeechProcessor:
     def __init__(self) -> None:
@@ -14,12 +15,12 @@ class SpeechProcessor:
         
         print(f"tts_provider: {tts_provider}")
 
-        if tts_provider == 'botnoi':
-            await self.botnoi_tts(text, session)
-        elif tts_provider == 'openai':
+        if tts_provider == 'openai_tts':
             await self.openai_tts(text, session)
+        elif tts_provider == "google_tts":
+            await self.google_tts(text, session)
         else:
-            await self.openai_tts(text, session)
+            await self.google_tts(text, session)
         
 
     async def openai_tts(self, text, session):
@@ -28,6 +29,6 @@ class SpeechProcessor:
     async def botnoi_tts(self, text, session):
         session.set_query_speech(await self.botnoi_provider.speech_synthesis(text))
 
-    def google_tts(self, text, session):
-        session.set_query_speech(self.google_provider.speech_synthesis(text))
+    async def google_tts(self, text, session):
+        session.set_query_speech(await self.google_provider.speech_synthesis(text))
 

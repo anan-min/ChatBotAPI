@@ -1,5 +1,5 @@
 from quart import Quart
-from app.routes import setup_routes
+from routes import setup_routes
 from quart_cors import cors
 
 
