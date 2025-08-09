@@ -6,6 +6,8 @@ import soundfile as sf
 import numpy as np
 from pydub import AudioSegment
 import tempfile
+import uuid
+import threading
 
 TEMP_PATH = Path(__file__).parent.parent / 'data' / 'temp'
 
@@ -20,8 +22,9 @@ def save_audio_file(byte_data, target_sample_rate=48000, target_format='wav'):
     :return: str - Path to the saved audio file
     """
     current_time = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    unique_id = str(uuid.uuid4())[:8]
     output_file_path = os.path.join(
-        TEMP_PATH, f"audio_{current_time}.{target_format}")
+        TEMP_PATH, f"audio_{current_time}_{unique_id}.{target_format}")
 
     if not os.path.exists(TEMP_PATH):
         os.makedirs(TEMP_PATH)
@@ -53,13 +56,17 @@ def save_audio_file(byte_data, target_sample_rate=48000, target_format='wav'):
         print(f"Pydub processing failed: {e}")
 
         try:
-            # Method 2: Try soundfile with numpy conversion
-            with tempfile.NamedTemporaryFile(delete=False, suffix='.tmp') as temp_file:
-                temp_file.write(byte_data)
-                temp_file.flush()
+            # Method 2: Try soundfile with numpy conversion using unique temp file
+            temp_unique_id = str(uuid.uuid4())[:8]
+            temp_file_path = os.path.join(TEMP_PATH, f"temp_{temp_unique_id}.tmp")
+            
+            try:
+                # Write to unique temp file
+                with open(temp_file_path, 'wb') as temp_file:
+                    temp_file.write(byte_data)
 
                 # Read with soundfile
-                data, original_sr = sf.read(temp_file.name)
+                data, original_sr = sf.read(temp_file_path)
 
                 # Convert to mono if stereo
                 if len(data.shape) > 1:
@@ -73,19 +80,24 @@ def save_audio_file(byte_data, target_sample_rate=48000, target_format='wav'):
                 # Save with soundfile
                 sf.write(output_file_path, data, target_sample_rate)
 
-                # Clean up temp file
-                os.unlink(temp_file.name)
-
                 print(
                     f"Audio processed with soundfile: {original_sr}Hz -> {target_sample_rate}Hz")
                 return output_file_path
+            finally:
+                # Clean up temp file safely
+                if os.path.exists(temp_file_path):
+                    try:
+                        os.unlink(temp_file_path)
+                    except Exception as cleanup_error:
+                        print(f"Warning: Could not delete temp file {temp_file_path}: {cleanup_error}")
 
         except Exception as e2:
             print(f"Soundfile processing failed: {e2}")
 
             # Method 3: Fallback - save raw bytes and let the consumer handle it
+            fallback_unique_id = str(uuid.uuid4())[:8]
             fallback_path = os.path.join(
-                TEMP_PATH, f"audio_{current_time}_raw.{target_format}")
+                TEMP_PATH, f"audio_{current_time}_{fallback_unique_id}_raw.{target_format}")
             with open(fallback_path, 'wb') as audio_file:
                 audio_file.write(byte_data)
 
@@ -117,6 +129,7 @@ def save_audio_file_robust(byte_data, preferred_format='wav'):
     Most robust version that tries multiple approaches and formats.
     """
     current_time = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    unique_id = str(uuid.uuid4())[:8]
 
     if not os.path.exists(TEMP_PATH):
         os.makedirs(TEMP_PATH)
@@ -127,7 +140,7 @@ def save_audio_file_robust(byte_data, preferred_format='wav'):
     for fmt in formats_to_try:
         try:
             output_file_path = os.path.join(
-                TEMP_PATH, f"audio_{current_time}.{fmt}")
+                TEMP_PATH, f"audio_{current_time}_{unique_id}.{fmt}")
 
             # Use pydub to detect and convert
             audio = AudioSegment.from_file(io.BytesIO(byte_data))
@@ -148,7 +161,8 @@ def save_audio_file_robust(byte_data, preferred_format='wav'):
             continue
 
     # Last resort: raw bytes
-    raw_path = os.path.join(TEMP_PATH, f"audio_{current_time}_raw.bin")
+    raw_unique_id = str(uuid.uuid4())[:8]
+    raw_path = os.path.join(TEMP_PATH, f"audio_{current_time}_{raw_unique_id}_raw.bin")
     with open(raw_path, 'wb') as f:
         f.write(byte_data)
 
