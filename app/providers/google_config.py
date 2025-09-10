@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from google.cloud import texttospeech, speech_v1 as speech
 
-current_dir = Path(__file__).resolve().parent
+current_dir = Path(__file__).resolve().parent.parent.parent
 api_credentials = str(current_dir / 'google_api_key.json')
 
 voice_configs = {

@@ -1,10 +1,11 @@
 import ollama
 import asyncio
+import os 
 
 
 class OllamaProvider:
     def __init__(self):
-        pass
+        self.model = os.getenv("OLLAMA_MODEL", "qwen2.5:3b")
 
     async def query_qwen25(self, text):
         """Query Qwen2.5-VL model and return text response"""
@@ -14,7 +15,7 @@ class OllamaProvider:
 
             # Query the model
             response = ollama.chat(
-                model='qwen2.5vl:latest',
+                model=self.model,
                 messages=[
                     {
                         'role': 'system',
@@ -30,7 +31,7 @@ class OllamaProvider:
             return response['message']['content']
 
         except Exception as e:
-            return f"Error querying Qwen2.5-VL: {str(e)}"
+            return f"Error querying {self.model}: {str(e)}"
 
     async def query_llama32(self, text):
         """Query Llama3.2 model and return text response"""
@@ -40,7 +41,7 @@ class OllamaProvider:
 
             # Query the model
             response = ollama.chat(
-                model='scb10x/llama3.1-typhoon2-8b-instruct:latest',
+                model='llama3.2:latest',
                 messages=[
                     {
                         'role': 'system',
@@ -56,7 +57,7 @@ class OllamaProvider:
             return response['message']['content']
 
         except Exception as e:
-            return f"Error querying scb10x/llama3.1-typhoon2-8b-instruct:latest: {str(e)}"
+            return f"Error querying llama3.2:latest: {str(e)}"
 
     async def update_prompt(self, text):
         """Update prompt with SCG context"""

@@ -34,13 +34,21 @@ class OpenAIProvider:
     
     async def query_text_file(self, text):
         # Since OpenAI's client library is not inherently asynchronous, run in executor
+        system_prompt = (
+            "You are a male virtual assistant for SCG Group in Thailand. "
+            "You respond to user questions and requests clearly and politely in Thai or English, as appropriate. "
+            "Your answers are delivered as text, which will be converted to speech for the user. "
+            "Sometimes, users may say things that are not related to SCG or may be testing the system; "
+            "always reply helpfully and professionally, even if the input seems irrelevant."
+        )
         loop = asyncio.get_running_loop()
         completion = await loop.run_in_executor(
             None,
             lambda: self.client.chat.completions.create(
                 model="gpt-4",
                 messages=[
-                    {"role": "system", "content": text},
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": text},
                 ]
             )
         )
@@ -52,7 +60,7 @@ class OpenAIProvider:
         start_time = time.time()
         response = await loop.run_in_executor(
             None,
-            lambda: self.client.audio.speech.create(model='tts-1', voice="alloy", input=text)
+            lambda: self.client.audio.speech.create(model='tts-1', voice="onyx", input=text)
         )
         end_time = time.time()
         result = b''.join([chunk for chunk in response.iter_bytes()])
