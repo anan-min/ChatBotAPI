@@ -20,27 +20,26 @@ class GoogleProvider:
         self.stt_client = speech.SpeechClient()
         self.language_client = language_v1.LanguageServiceClient()
 
-
     async def transcribe_audio_file(self, audio_data, language_code="th-TH", encoding=None, sample_rate_hertz=None):
-            """Transcribe audio data using Google Speech-to-Text"""
-            start_time = time.time()
-            loop = asyncio.get_running_loop()
-            transcribed_data = await loop.run_in_executor(
-                None,
-                self._transcribe_sync,
-                audio_data,
-                language_code,
-                encoding,
-                sample_rate_hertz
-            )
-            end_time = time.time()
-            print(f"Transcription took {end_time - start_time:.2f} seconds")
-            return transcribed_data
+        """Transcribe audio data using Google Speech-to-Text"""
+        start_time = time.time()
+        loop = asyncio.get_running_loop()
+        transcribed_data = await loop.run_in_executor(
+            None,
+            self._transcribe_sync,
+            audio_data,
+            language_code,
+            encoding,
+            sample_rate_hertz
+        )
+        end_time = time.time()
+        print(f"Transcription took {end_time - start_time:.2f} seconds")
+        return transcribed_data
 
     def _transcribe_sync(self, audio_data, language_code, encoding, sample_rate_hertz):
         """Synchronous transcription helper"""
         audio = speech.RecognitionAudio(content=audio_data)
-        
+
         # Auto-detect encoding and sample rate if not provided
         if encoding is None:
             # Try to detect common formats based on audio data headers
@@ -68,39 +67,46 @@ class GoogleProvider:
             enable_automatic_punctuation=True,
             model="latest_long"  # Use latest model for better accuracy
         )
-        
+
         # Only set sample rate if provided and not None
         if sample_rate_hertz is not None:
             config.sample_rate_hertz = sample_rate_hertz
 
         try:
             response = self.stt_client.recognize(config=config, audio=audio)
-            
+
             # Combine all transcripts
             transcripts = []
             for result in response.results:
                 transcripts.append(result.alternatives[0].transcript)
-            
+
             return " ".join(transcripts)
-            
+
         except Exception as e:
             print(f"Transcription error: {e}")
             # Try with WEBM_OPUS as fallback
             if encoding != speech.RecognitionConfig.AudioEncoding.WEBM_OPUS:
                 config.encoding = speech.RecognitionConfig.AudioEncoding.WEBM_OPUS
                 config.sample_rate_hertz = None
-                
-                response = self.stt_client.recognize(config=config, audio=audio)
+
+                response = self.stt_client.recognize(
+                    config=config, audio=audio)
                 transcripts = []
                 for result in response.results:
                     transcripts.append(result.alternatives[0].transcript)
-                
+
                 return " ".join(transcripts)
             else:
                 raise e
 
-    async def speech_synthesis(self, text, language_code="en-US", voice_name="en-US-Wavenet-D"):
-        """Convert text to speech using Google Text-to-Speech"""
+    async def speech_synthesis(self, text, language_code=None, voice_name=None):
+        """Convert text to speech using Google Text-to-Speech - hardcoded to Thai"""
+
+        # Hardcode to Thai language
+        language_code = "th-TH"
+        voice_name = "th-TH-Standard-A"  # Thai voice
+        print(f"Using Thai TTS: {voice_name}")
+
         start_time = time.time()
         loop = asyncio.get_running_loop()
         audio_content = await loop.run_in_executor(
@@ -118,11 +124,17 @@ class GoogleProvider:
         """Synchronous speech synthesis helper"""
         input_text = texttospeech.SynthesisInput(text=text)
 
-        voice = texttospeech.VoiceSelectionParams(
-            language_code=language_code,
-            name=voice_name,
-            ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL,
-        )
+        # Let Google auto-detect if no specific voice is provided
+        if voice_name is None:
+            voice = texttospeech.VoiceSelectionParams(
+                language_code=language_code
+            )
+        else:
+            voice = texttospeech.VoiceSelectionParams(
+                language_code=language_code,
+                name=voice_name,
+                ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL,
+            )
 
         audio_config = texttospeech.AudioConfig(
             audio_encoding=texttospeech.AudioEncoding.MP3
