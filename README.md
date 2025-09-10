@@ -41,7 +41,39 @@ A Python-based chatbot API that integrates multiple AI providers including OpenA
    - Speech-to-Text API  
    - Natural Language API
 
-### 3. Virtual Environment Setup
+### 3. Install FFmpeg (Required for Audio Processing)
+
+FFmpeg is required for audio file processing. Choose one of the following methods:
+
+#### Method 1: Using Winget (Recommended - Built into Windows 10/11)
+```bash
+winget install ffmpeg
+```
+
+#### Method 2: Using Chocolatey (Alternative)
+1. **Install Chocolatey** (if not already installed):
+   Open PowerShell as Administrator and run:
+   ```powershell
+   Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+   ```
+
+2. **Install FFmpeg:**
+   ```bash
+   choco install ffmpeg
+   ```
+
+#### Method 3: Manual Installation (Last Resort)
+1. Download FFmpeg from [https://ffmpeg.org/download.html](https://ffmpeg.org/download.html)
+2. Extract to `C:\ffmpeg`
+3. Add `C:\ffmpeg\bin` to your Windows PATH environment variable
+4. Restart your terminal
+
+**Verify Installation:**
+```bash
+ffmpeg -version
+```
+
+### 4. Virtual Environment Setup
 
 1. Create a virtual environment:
    ```bash
@@ -63,7 +95,7 @@ A Python-based chatbot API that integrates multiple AI providers including OpenA
    pip install -r requirements.txt
    ```
 
-### 4. Run the Application
+### 5. Run the Application
 
 Navigate to the app directory and run the main application:
 ```bash

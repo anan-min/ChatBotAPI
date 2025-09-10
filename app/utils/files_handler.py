@@ -4,6 +4,8 @@ import io
 from pathlib import Path
 import soundfile as sf
 import numpy as np
+import warnings
+warnings.filterwarnings("ignore", message="Couldn't find ffmpeg or avconv")
 from pydub import AudioSegment
 import tempfile
 import uuid
